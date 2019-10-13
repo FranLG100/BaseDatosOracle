@@ -25,6 +25,7 @@ public class Controlador implements ActionListener, MouseListener {
 	public enum AccionMVC {
 		__GOTO_USUARIOS, __GOTO_INICIO, __CREAR_USUARIO, __MODIFICAR_USUARIO, __ELIMINAR_USUARIO,
 		__CASTIGAR_USUARIO,__PERDONAR_USUARIO,
+		__GOTO_LIBROS
 		}
 	
 	public Controlador(Vista vista) {
@@ -47,6 +48,12 @@ public class Controlador implements ActionListener, MouseListener {
 		// declara una acción y añade un escucha al evento producido por el componente
 		this.vista.bVolverPIPUs.setActionCommand("__GOTO_INICIO");
 		this.vista.bVolverPIPUs.addActionListener(this);
+		
+		this.vista.bVolverPIPLib.setActionCommand("__GOTO_INICIO");
+		this.vista.bVolverPIPLib.addActionListener(this);
+		
+		this.vista.bLibrosPI.setActionCommand("__GOTO_LIBROS");
+		this.vista.bLibrosPI.addActionListener(this);
 		
 		this.vista.bUsuariosPI.setActionCommand("__GOTO_USUARIOS");
 		this.vista.bUsuariosPI.addActionListener(this);
@@ -140,6 +147,10 @@ public class Controlador implements ActionListener, MouseListener {
 				e1.printStackTrace();
 			}
 			this.vista.tablaUsuarios.setModel(usuario.listarUsuarios());
+			break;
+		case __GOTO_LIBROS:
+			gui.cambiarPanel(vista.pLibros);
+			//this.vista.tablaUsuarios.setModel(usuario.listarUsuarios());
 			break;
 		}
 	}

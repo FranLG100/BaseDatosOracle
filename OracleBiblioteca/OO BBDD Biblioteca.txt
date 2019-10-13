@@ -91,3 +91,90 @@ create or replace PROCEDURE      "CASTIGAR_USUARIO" (
 BEGIN
     UPDATE USUARIOS U SET U.PENALIZADO=1 WHERE U.id=identificador;
 END;
+
+
+
+///////////////////////////////////////////////////////
+CREATE TABLE CLASE_LIBRO(
+id NUMBER,
+categoria VARCHAR2(255),
+plazo NUMBER,
+PRIMARY KEY(id)
+);
+----------------------------------------
+CREATE OR REPLACE TYPE AUTOR AS OBJECT(
+nombre VARCHAR2(255),
+apellido VARCHAR2(255)
+);
+-----------------------------------------
+CREATE OR REPLACE TYPE LIBRO AS OBJECT(
+id NUMBER(255),
+titulo VARCHAR2(255),
+autor HR.AUTOR,
+editor VARCHAR2(255),
+clase NUMBER,
+disponible NUMBER
+);
+------------------------------------------
+CREATE SEQUENCE seq_libro
+   MINVALUE 1
+   START WITH 1
+   INCREMENT BY 1;
+------------------------------------------
+CREATE TABLE LIBROS OF LIBRO(
+id PRIMARY KEY,
+FOREIGN KEY (clase) REFERENCES CLASE_LIBRO(id)
+);
+-------------------------------------------
+create or replace PACKAGE      "CONSULTA_LIBROS" 
+AS
+
+    TYPE cursor_dinamico IS REF CURSOR;
+    PROCEDURE obtener_libros(lista_registros OUT cursor_dinamico);
+
+END;
+-----------------------------------------------
+create or replace PROCEDURE      "INSERTAR_LIBRO" (
+      titulo  IN LIBROS.titulo%TYPE,
+      nombre IN LIBROS.AUTOR.nombre%TYPE,
+	apellido  IN LIBROS.AUTOR.apellido%TYPE,
+      editor IN LIBROS.editor%TYPE,
+	clase IN LIBROS.clase%TYPE
+) IS
+BEGIN
+    INSERT INTO LIBROS VALUES(seq_libro.NEXTVAL,titulo,AUTOR(nombre,apellido),editor,clase,1);
+END;
+----------------------------------------------------
+create or replace PROCEDURE      "MODIFICAR_LIBRO" (
+      ntitulo  IN LIBROS.titulo%TYPE,
+      nnombre IN LIBROS.AUTOR.nombre%TYPE,
+	napellido  IN LIBROS.AUTOR.apellido%TYPE,
+      neditor IN LIBROS.editor%TYPE,
+	nclase IN LIBROS.clase%TYPE,
+	identificador  IN LIBROS.id%TYPE
+	
+) IS
+BEGIN
+    UPDATE LIBROS L SET L.titulo=ntitulo, L.AUTOR.nombre=nnombre, L.AUTOR.apellido=napellido, L.editor=neditor, L.clase=nclase WHERE L.id=identificador;
+END;
+-----------------------------------------------------
+create or replace PROCEDURE      "BORRAR_LIBRO" (
+      identificador  IN LIBROS.id%TYPE
+) IS
+BEGIN
+    DELETE FROM LIBROS L WHERE L.id=identificador;
+END;
+...................................................................
+create or replace PROCEDURE      "PRESTAR_LIBRO" (
+      identificador  IN LIBROS.id%TYPE
+) IS
+BEGIN
+    UPDATE LIBROS L SET L.DISPONIBLE=0 WHERE L.id=identificador;
+END;
+---------------------------------------------------------------------
+create or replace PROCEDURE      "DEVOLVER_LIBRO" (
+      identificador  IN LIBROS.id%TYPE
+) IS
+BEGIN
+    UPDATE LIBROS L SET L.DISPONIBLE=1 WHERE L.id=identificador;
+END;

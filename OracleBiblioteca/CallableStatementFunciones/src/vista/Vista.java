@@ -30,6 +30,7 @@ public class Vista extends javax.swing.JFrame {
         pContainer = new javax.swing.JPanel();
         pInicio = new javax.swing.JPanel();
         bUsuariosPI = new javax.swing.JButton();
+        bLibrosPI = new javax.swing.JButton();
         pUsuarios = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
@@ -61,6 +62,33 @@ public class Vista extends javax.swing.JFrame {
         btnPerdonarUsuario = new javax.swing.JButton();
         cIDPerdonarUsuario = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        pLibros = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaLibros = new javax.swing.JTable();
+        bVolverPIPLib = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        cTituloLibro = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        cNombreLibro = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        cApellidoLibro = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        cEditorialLibro = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        cTipoLibro = new javax.swing.JTextField();
+        btnCrearLibro = new javax.swing.JButton();
+        btnModificarLibro = new javax.swing.JButton();
+        btnEliminarLibro = new javax.swing.JButton();
+        cIDEliminarLibro = new javax.swing.JTextField();
+        cIDModificarLibro = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        btnDisponibleLibro = new javax.swing.JButton();
+        cIDDisponibleLibro = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        btnCambiarAPrestar = new javax.swing.JButton();
+        cIDPrestarLibro = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,21 +101,32 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
+        bLibrosPI.setText("Libros");
+        bLibrosPI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLibrosPIActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pInicioLayout = new javax.swing.GroupLayout(pInicio);
         pInicio.setLayout(pInicioLayout);
         pInicioLayout.setHorizontalGroup(
             pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pInicioLayout.createSequentialGroup()
                 .addGap(156, 156, 156)
-                .addComponent(bUsuariosPI)
-                .addGap(184, 184, 184))
+                .addGroup(pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bUsuariosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bLibrosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         pInicioLayout.setVerticalGroup(
             pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pInicioLayout.createSequentialGroup()
                 .addGap(126, 126, 126)
                 .addComponent(bUsuariosPI)
-                .addGap(137, 137, 137))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bLibrosPI)
+                .addContainerGap())
         );
 
         pContainer.add(pInicio, "card2");
@@ -280,6 +319,181 @@ public class Vista extends javax.swing.JFrame {
 
         pContainer.add(pUsuarios, "card3");
 
+        tablaLibros.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(tablaLibros);
+
+        bVolverPIPLib.setText("Volver");
+
+        jLabel13.setText("Titulo");
+
+        cTituloLibro.setText(" ");
+
+        jLabel14.setText("Nombre Autor");
+
+        cNombreLibro.setText(" ");
+
+        jLabel15.setText("Apellido Autor");
+
+        cApellidoLibro.setText(" ");
+
+        jLabel16.setText("Editorial");
+
+        cEditorialLibro.setText(" ");
+
+        jLabel17.setText("Tipo Libro");
+
+        cTipoLibro.setText(" ");
+
+        btnCrearLibro.setText("Crear Libro");
+
+        btnModificarLibro.setText("Modificar Libro");
+
+        btnEliminarLibro.setText("Eliminar Libro");
+        btnEliminarLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarLibroActionPerformed(evt);
+            }
+        });
+
+        cIDEliminarLibro.setText(" ");
+
+        cIDModificarLibro.setText(" ");
+
+        jLabel19.setText("ID");
+
+        jLabel20.setText("ID");
+
+        btnDisponibleLibro.setText("Hacer disponible");
+
+        cIDDisponibleLibro.setText(" ");
+
+        jLabel21.setText("ID");
+
+        btnCambiarAPrestar.setText("Prestar");
+
+        cIDPrestarLibro.setText(" ");
+
+        jLabel22.setText("ID");
+
+        javax.swing.GroupLayout pLibrosLayout = new javax.swing.GroupLayout(pLibros);
+        pLibros.setLayout(pLibrosLayout);
+        pLibrosLayout.setHorizontalGroup(
+            pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pLibrosLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(pLibrosLayout.createSequentialGroup()
+                        .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnModificarLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCrearLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminarLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(37, 37, 37)
+                        .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cIDEliminarLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cIDModificarLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel20))
+                        .addGap(72, 72, 72)
+                        .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDisponibleLibro)
+                            .addComponent(btnCambiarAPrestar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cIDDisponibleLibro, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                            .addComponent(cIDPrestarLibro))
+                        .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pLibrosLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bVolverPIPLib))
+                            .addGroup(pLibrosLayout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel21)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(pLibrosLayout.createSequentialGroup()
+                        .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(cTituloLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14)
+                            .addComponent(cNombreLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15)
+                            .addComponent(cApellidoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16)
+                            .addComponent(cEditorialLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17)
+                            .addComponent(cTipoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 734, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(51, 51, 51))
+        );
+        pLibrosLayout.setVerticalGroup(
+            pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pLibrosLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pLibrosLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cTituloLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cNombreLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cApellidoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cEditorialLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cTipoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(84, 84, 84)
+                        .addComponent(btnCrearLibro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnDisponibleLibro)
+                                .addComponent(cIDDisponibleLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel21))
+                            .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnModificarLibro)
+                                .addComponent(cIDModificarLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel19)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCambiarAPrestar)
+                        .addComponent(cIDPrestarLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel22))
+                    .addGroup(pLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEliminarLibro)
+                        .addComponent(cIDEliminarLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel20)
+                        .addComponent(bVolverPIPLib)))
+                .addContainerGap())
+        );
+
+        pContainer.add(pLibros, "card3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -299,6 +513,14 @@ public class Vista extends javax.swing.JFrame {
     private void bUsuariosPIActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
     }                                           
+
+    private void bLibrosPIActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // TODO add your handling code here:
+    }                                         
+
+    private void btnEliminarLibroActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        // TODO add your handling code here:
+    }                                                
 
     /**
      * @param args the command line arguments
@@ -336,28 +558,53 @@ public class Vista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify                     
+    public javax.swing.JButton bLibrosPI;
     public javax.swing.JButton bUsuariosPI;
+    public javax.swing.JButton bVolverPIPLib;
     public javax.swing.JButton bVolverPIPUs;
+    public javax.swing.JButton btnCambiarAPrestar;
     public javax.swing.JButton btnCastigarUsuario;
+    public javax.swing.JButton btnCrearLibro;
     public javax.swing.JButton btnCrearUsuario;
+    public javax.swing.JButton btnDisponibleLibro;
+    public javax.swing.JButton btnEliminarLibro;
     public javax.swing.JButton btnEliminarUsuario;
+    public javax.swing.JButton btnModificarLibro;
     public javax.swing.JButton btnModificarUsuario;
     public javax.swing.JButton btnPerdonarUsuario;
+    public javax.swing.JTextField cApellidoLibro;
     public javax.swing.JTextField cApellidoUsuario;
     public javax.swing.JTextField cCalleUsuario;
     public javax.swing.JTextField cCiudadUsuario;
     public javax.swing.JTextField cDNIUsuario;
+    public javax.swing.JTextField cEditorialLibro;
     public javax.swing.JTextField cEmailUsuario;
+    public javax.swing.JTextField cIDDisponibleLibro;
+    public javax.swing.JTextField cIDEliminarLibro;
     public javax.swing.JTextField cIDEliminarUsuario;
+    public javax.swing.JTextField cIDModificarLibro;
     public javax.swing.JTextField cIDModificarUsuario;
     public javax.swing.JTextField cIDPenalizarUsuario;
     public javax.swing.JTextField cIDPerdonarUsuario;
+    public javax.swing.JTextField cIDPrestarLibro;
+    public javax.swing.JTextField cNombreLibro;
     public javax.swing.JTextField cNombreUsuario;
+    public javax.swing.JTextField cTipoLibro;
+    public javax.swing.JTextField cTituloLibro;
     public javax.swing.JTextField cZipUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -366,9 +613,13 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JPanel pContainer;
     public javax.swing.JPanel pInicio;
+    public javax.swing.JPanel pLibros;
     public javax.swing.JPanel pUsuarios;
+    public javax.swing.JTable tablaLibros;
     public javax.swing.JTable tablaUsuarios;
     // End of variables declaration                   
 }
+

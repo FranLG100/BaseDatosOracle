@@ -55,6 +55,12 @@ public class Vista extends javax.swing.JFrame {
         cIDModificarUsuario = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        btnCastigarUsuario = new javax.swing.JButton();
+        cIDPenalizarUsuario = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        btnPerdonarUsuario = new javax.swing.JButton();
+        cIDPerdonarUsuario = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -143,6 +149,18 @@ public class Vista extends javax.swing.JFrame {
 
         jLabel9.setText("ID");
 
+        btnCastigarUsuario.setText("Penalizar Usuario");
+
+        cIDPenalizarUsuario.setText(" ");
+
+        jLabel10.setText("ID");
+
+        btnPerdonarUsuario.setText("Perdonar Usuario");
+
+        cIDPerdonarUsuario.setText(" ");
+
+        jLabel11.setText("ID");
+
         javax.swing.GroupLayout pUsuariosLayout = new javax.swing.GroupLayout(pUsuarios);
         pUsuarios.setLayout(pUsuariosLayout);
         pUsuariosLayout.setHorizontalGroup(
@@ -161,11 +179,23 @@ public class Vista extends javax.swing.JFrame {
                             .addComponent(cIDModificarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pUsuariosLayout.createSequentialGroup()
-                                .addComponent(jLabel8)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(72, 72, 72)
+                        .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pUsuariosLayout.createSequentialGroup()
+                                .addComponent(btnCastigarUsuario)
+                                .addGap(37, 37, 37)
+                                .addComponent(cIDPenalizarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel10)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(pUsuariosLayout.createSequentialGroup()
-                                .addComponent(jLabel9)
+                                .addComponent(btnPerdonarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(cIDPerdonarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(bVolverPIPUs))))
                     .addGroup(pUsuariosLayout.createSequentialGroup()
@@ -194,7 +224,7 @@ public class Vista extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pUsuariosLayout.createSequentialGroup()
                         .addComponent(cDNIUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,16 +255,26 @@ public class Vista extends javax.swing.JFrame {
                         .addGap(33, 33, 33)
                         .addComponent(btnCrearUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnModificarUsuario)
-                            .addComponent(cIDModificarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))))
+                        .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnCastigarUsuario)
+                                .addComponent(cIDPenalizarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel10))
+                            .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnModificarUsuario)
+                                .addComponent(cIDModificarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel8)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminarUsuario)
-                    .addComponent(cIDEliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(bVolverPIPUs))
+                .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnPerdonarUsuario)
+                        .addComponent(cIDPerdonarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel11))
+                    .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEliminarUsuario)
+                        .addComponent(cIDEliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9)
+                        .addComponent(bVolverPIPUs)))
                 .addContainerGap())
         );
 
@@ -298,9 +338,11 @@ public class Vista extends javax.swing.JFrame {
     // Variables declaration - do not modify                     
     public javax.swing.JButton bUsuariosPI;
     public javax.swing.JButton bVolverPIPUs;
+    public javax.swing.JButton btnCastigarUsuario;
     public javax.swing.JButton btnCrearUsuario;
     public javax.swing.JButton btnEliminarUsuario;
     public javax.swing.JButton btnModificarUsuario;
+    public javax.swing.JButton btnPerdonarUsuario;
     public javax.swing.JTextField cApellidoUsuario;
     public javax.swing.JTextField cCalleUsuario;
     public javax.swing.JTextField cCiudadUsuario;
@@ -308,9 +350,13 @@ public class Vista extends javax.swing.JFrame {
     public javax.swing.JTextField cEmailUsuario;
     public javax.swing.JTextField cIDEliminarUsuario;
     public javax.swing.JTextField cIDModificarUsuario;
+    public javax.swing.JTextField cIDPenalizarUsuario;
+    public javax.swing.JTextField cIDPerdonarUsuario;
     public javax.swing.JTextField cNombreUsuario;
     public javax.swing.JTextField cZipUsuario;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

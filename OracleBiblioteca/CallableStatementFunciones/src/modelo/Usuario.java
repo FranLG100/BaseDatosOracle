@@ -104,10 +104,30 @@ public class Usuario {
 		con.close();
 	}
 	
+	public void castigarUsuario(int id) throws SQLException {
+		//EJEMPLO PROCEDIMIENTO
+		con=Conexion.getConnection();
+		cstmt = con.prepareCall("{call CASTIGAR_USUARIO(?)}");
+		 cstmt.setInt(1, id);
+         cstmt.execute();
+         cstmt.close();
+		con.close();
+	}
+	
+	public void perdonarUsuario(int id) throws SQLException {
+		//EJEMPLO PROCEDIMIENTO
+		con=Conexion.getConnection();
+		cstmt = con.prepareCall("{call PERDONAR_USUARIO(?)}");
+		 cstmt.setInt(1, id);
+         cstmt.execute();
+         cstmt.close();
+		con.close();
+	}
+	
 	public DefaultTableModel listarUsuarios() {
 
 		tamanho=0;
-		String[] headers = { "ID","DNI","Nombre","Apellido","Calle","Ciudad","ZIP","Email" };
+		String[] headers = { "ID","DNI","Nombre","Apellido","Calle","Ciudad","ZIP","Email","Penalizado" };
 		DefaultTableModel plantilla = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -133,10 +153,10 @@ public class Usuario {
 			e.printStackTrace();
 		}
 
-		String[][] filas = new String[tamanho][8];
+		String[][] filas = new String[tamanho][9];
 
 		try {
-			int id,zip;
+			int id,zip,penalizado;
 			String dni,nombre,apellido,calle,ciudad,email;
 			con=Conexion.getConnection();
 			cstmt=con.prepareCall("{call CONSULTA_USUARIOS.obtener_usuarios(?)}");
@@ -153,6 +173,7 @@ public class Usuario {
 				ciudad=cursor.getString(6);
 				zip=cursor.getInt(7);
 				email=cursor.getString(8);
+				penalizado=cursor.getInt(9);
 				filas[i][0] = Integer.toString(id);
 				filas[i][1] = dni;
 				filas[i][2] = nombre;
@@ -161,6 +182,7 @@ public class Usuario {
 				filas[i][5] = ciudad;
 				filas[i][6] = Integer.toString(zip);
 				filas[i][7] = email;
+				filas[i][8] = Integer.toString(penalizado);
 				
 				i++;
 				System.out.println(filas.toString());

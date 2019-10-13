@@ -24,6 +24,7 @@ public class Controlador implements ActionListener, MouseListener {
 	
 	public enum AccionMVC {
 		__GOTO_USUARIOS, __GOTO_INICIO, __CREAR_USUARIO, __MODIFICAR_USUARIO, __ELIMINAR_USUARIO,
+		__CASTIGAR_USUARIO,__PERDONAR_USUARIO,
 		}
 	
 	public Controlador(Vista vista) {
@@ -58,6 +59,12 @@ public class Controlador implements ActionListener, MouseListener {
 		
 		this.vista.btnEliminarUsuario.setActionCommand("__ELIMINAR_USUARIO");
 		this.vista.btnEliminarUsuario.addActionListener(this);
+		
+		this.vista.btnCastigarUsuario.setActionCommand("__CASTIGAR_USUARIO");
+		this.vista.btnCastigarUsuario.addActionListener(this);
+		
+		this.vista.btnPerdonarUsuario.setActionCommand("__PERDONAR_USUARIO");
+		this.vista.btnPerdonarUsuario.addActionListener(this);
 
 	}
 
@@ -108,6 +115,26 @@ public class Controlador implements ActionListener, MouseListener {
 			id=Integer.parseInt(vista.cIDEliminarUsuario.getText().trim());
 			try {
 				usuario.borrarUsuario(id);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			this.vista.tablaUsuarios.setModel(usuario.listarUsuarios());
+			break;
+		case __CASTIGAR_USUARIO:
+			id=Integer.parseInt(vista.cIDPenalizarUsuario.getText().trim());
+			try {
+				usuario.castigarUsuario(id);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			this.vista.tablaUsuarios.setModel(usuario.listarUsuarios());
+			break;
+		case __PERDONAR_USUARIO:
+			id=Integer.parseInt(vista.cIDPerdonarUsuario.getText().trim());
+			try {
+				usuario.perdonarUsuario(id);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

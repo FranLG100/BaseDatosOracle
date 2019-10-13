@@ -1,0 +1,93 @@
+CREATE OR REPLACE TYPE TELEFONO AS VARRAY(3) OF VARCHAR2(9);
+
+CREATE OR REPLACE TYPE DIRECCION AS OBJECT(
+calle VARCHAR2(255),
+ciudad VARCHAR2(255),
+codpost NUMBER(5)
+);
+
+create or replace TYPE USUARIO AS OBJECT(
+id NUMBER,
+dni VARCHAR2(255),
+nombre VARCHAR2(255),
+apellido VARCHAR2(255),
+direccion HR.DIRECCION,
+email VARCHAR2(255)
+);
+
+CREATE SEQUENCE seq_usuario
+   MINVALUE 1
+   START WITH 1
+   INCREMENT BY 1;
+
+CREATE TABLE USUARIOS OF USUARIO(
+id PRIMARY KEY
+);
+
+INSERT INTO USUARIOS VALUES(seq_usuario.NEXTVAL,DNI,NOMBRE,APELLIDO,DIRECCION(),EMAIL);
+
+--------------------------------------------------
+create or replace PACKAGE      "CONSULTA_USUARIOS" 
+AS
+
+    TYPE cursor_dinamico IS REF CURSOR;
+    PROCEDURE obtener_usuarios(lista_registros OUT cursor_dinamico);
+
+END;
+----------------------------------------------------
+create or replace PACKAGE BODY CONSULTA_USUARIOS
+IS
+   PROCEDURE obtener_usuarios(lista_registros OUT cursor_dinamico) IS 
+    BEGIN      
+        OPEN lista_registros FOR 
+        SELECT ID,DNI,NOMBRE,APELLIDO,U.DIRECCION.CALLE,U.DIRECCION.CIUDAD,U.DIRECCION.CODPOST,TLF(1),EMAIL FROM USUARIOS U;
+  END;
+  END;
+......................................................
+create or replace PROCEDURE      "INSERTAR_USUARIO" (
+      dni  IN USUARIOS.dni%TYPE,
+      nombre IN USUARIOS.nombre%TYPE,
+      apellido IN USUARIOS.apellido%TYPE,
+      calle IN USUARIOS.DIRECCION.calle%TYPE,
+      ciudad IN USUARIOS.DIRECCION.ciudad%TYPE,
+      zip IN USUARIOS.DIRECCION.codpost%TYPE,
+      email IN USUARIOS.email%TYPE
+) IS
+BEGIN
+    INSERT INTO USUARIOS VALUES(seq_usuario.NEXTVAL,dni,nombre,apellido,DIRECCION(calle,ciudad,zip),email);
+END;
+............................................................
+create or replace PROCEDURE      "MODIFICAR_USUARIO" (
+      ndni  IN USUARIOS.dni%TYPE,
+      nnombre IN USUARIOS.nombre%TYPE,
+      napellido IN USUARIOS.apellido%TYPE,
+      ncalle IN USUARIOS.DIRECCION.calle%TYPE,
+      nciudad IN USUARIOS.DIRECCION.ciudad%TYPE,
+      nzip IN USUARIOS.DIRECCION.codpost%TYPE,
+      nemail IN USUARIOS.email%TYPE,
+      identificador  IN USUARIOS.id%TYPE
+) IS
+BEGIN
+    UPDATE USUARIOS U SET U.dni=ndni,U.nombre=nnombre,U.apellido=napellido,U.DIRECCION.calle=ncalle,U.DIRECCION.ciudad=nciudad,U.DIRECCION.codpost=nzip,U.email=nemail WHERE U.id=identificador;
+END;
+----------------------------------------------------------------
+create or replace PROCEDURE      "BORRAR_USUARIO" (
+      identificador  IN USUARIOS.id%TYPE
+) IS
+BEGIN
+    DELETE FROM USUARIOS U WHERE U.id=identificador;
+END;
+...................................................................
+create or replace PROCEDURE      "PERDONAR_USUARIO" (
+      identificador  IN USUARIOS.id%TYPE
+) IS
+BEGIN
+    UPDATE USUARIOS U SET U.PENALIZADO=0 WHERE U.id=identificador;
+END;
+---------------------------------------------------------------------
+create or replace PROCEDURE      "CASTIGAR_USUARIO" (
+      identificador  IN USUARIOS.id%TYPE
+) IS
+BEGIN
+    UPDATE USUARIOS U SET U.PENALIZADO=1 WHERE U.id=identificador;
+END;

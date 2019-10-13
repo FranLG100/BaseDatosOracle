@@ -193,9 +193,32 @@ CREATE SEQUENCE seq_prestamos
 
 CREATE TABLE PRESTAMOS(
 id NUMBER, 
-usuario REF USUARIO,
-libro REF LIBRO,
+usuario REF USUARIO SCOPE IS USUARIOS,
+libro REF LIBRO SCOPE IS LIBROS,
 finicio DATE,
 ffin DATE,
-fplazo DATE
+fplazo DATE,
+PRIMARY KEY(id)
 )
+
+--------------------------------------
+INSERT INTO PRESTAMOS(ID,USUARIO,LIBRO,FINICIO,FFIN,FPLAZO) SELECT seq_libro.NEXTVAL, REF(U),REF(L),'13/10/19',NULL,'20/10/19' FROM USUARIOS U, LIBROS L WHERE L.ID=1 AND U.ID=26;
+---------------------------------------
+SELECT ID,P.USUARIO.NOMBRE,P.USUARIO.APELLIDO,P.LIBRO.TITULO,P.FINICIO,P.FFIN,P.FPLAZO FROM PRESTAMOS P;
+---------------------------------------
+create or replace PACKAGE      "CONSULTA_PRESTAMOS" 
+AS
+
+    TYPE cursor_dinamico IS REF CURSOR;
+    PROCEDURE obtener_prestamos(lista_registros OUT cursor_dinamico);
+
+END;
+-----------------------------------------------
+create or replace PACKAGE BODY CONSULTA_PRESTAMOS
+IS
+   PROCEDURE obtener_prestamos(lista_registros OUT cursor_dinamico) IS 
+    BEGIN      
+        OPEN lista_registros FOR 
+        SELECT ID,P.USUARIO.NOMBRE,P.USUARIO.APELLIDO,P.LIBRO.TITULO,P.FINICIO,P.FFIN,P.FPLAZO FROM PRESTAMOS P;
+  END;
+  END;

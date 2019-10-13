@@ -222,3 +222,28 @@ IS
         SELECT ID,P.USUARIO.NOMBRE,P.USUARIO.APELLIDO,P.LIBRO.TITULO,P.FINICIO,P.FFIN,P.FPLAZO FROM PRESTAMOS P;
   END;
   END;
+---------------------------------------------------
+create or replace PROCEDURE      "INSERTAR_PRESTAMO" (
+      nusuario IN USUARIOS.id%TYPE,
+	nlibro IN LIBROS.id%TYPE,
+	nfinicio IN DATE
+) IS
+disponibilidad NUMBER;
+BEGIN
+SELECT L.DISPONIBLE into disponibilidad FROM LIBROS L WHERE ID=nlibro;
+IF disponibilidad=1 THEN
+    UPDATE LIBROS SET DISPONIBLE=0 WHERE ID=nlibro;
+    INSERT INTO PRESTAMOS(ID,USUARIO,LIBRO,FINICIO,FFIN,FPLAZO) SELECT seq_libro.NEXTVAL, REF(U),REF(L),nfinicio,NULL,nfinicio+(SELECT C.plazo FROM CLASE_LIBRO C JOIN LIBROS L ON L.clase=C.id WHERE L.id=nlibro) FROM USUARIOS U, LIBROS L WHERE L.ID=nlibro AND U.ID=nusuario;
+ELSE
+  DBMS_OUTPUT.PUT_LINE('Ya esta prestado');
+  END IF;
+END;
+-----------------------------------------------------
+create or replace PROCEDURE      "DEVOLVER_PRESTAMO" (
+	nprestamo IN NUMBER,
+	nffin IN DATE
+) IS
+BEGIN
+UPDATE PRESTAMOS SET FFIN=nffin WHERE ID=nprestamo;
+UPDATE LIBROS SET DISPONIBLE=1 WHERE ID=(SELECT DEREF(LIBRO).ID FROM PRESTAMOS WHERE ID=nprestamo);
+END;

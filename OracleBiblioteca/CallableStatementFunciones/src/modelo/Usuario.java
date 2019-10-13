@@ -77,7 +77,7 @@ public class Usuario {
 		con.close();
 	}
 	
-	public void modificarUsuario(String dni, String nombre, String apellido, String calle, String ciudad,int zip, String email,int id) throws SQLException {
+	public void modificarUsuario(String dni, String nombre, String apellido, String calle, String ciudad,String zip, String email,int id) throws SQLException {
 		//EJEMPLO PROCEDIMIENTO
 		con=Conexion.getConnection();
 		cstmt = con.prepareCall("{call MODIFICAR_USUARIO(?,?,?,?,?,?,?,?)}");
@@ -86,7 +86,7 @@ public class Usuario {
 		 cstmt.setString(3, apellido);
 		 cstmt.setString(4, calle);
 		 cstmt.setString(5, ciudad);
-		 cstmt.setInt(6, zip);
+		 cstmt.setString(6, zip);
 		 cstmt.setString(7, email);
 		 cstmt.setInt(8, id);
          cstmt.execute();

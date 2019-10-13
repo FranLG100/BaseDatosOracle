@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import modelo.GestorInterfaz;
+import modelo.Libro;
 import modelo.Usuario;
 import vista.Vista;
 
@@ -19,13 +20,16 @@ public class Controlador implements ActionListener, MouseListener {
 	private Vista vista;
 	private GestorInterfaz gui;
 	private Usuario usuario=new Usuario();
+	private Libro libro= new Libro();
 	private String dni,nombre,apellido,calle,ciudad,email,zip;
+	private String titulo,editorial;
 	private int id;
+	private int codigo,disponibilidad;
 	
 	public enum AccionMVC {
 		__GOTO_USUARIOS, __GOTO_INICIO, __CREAR_USUARIO, __MODIFICAR_USUARIO, __ELIMINAR_USUARIO,
 		__CASTIGAR_USUARIO,__PERDONAR_USUARIO,
-		__GOTO_LIBROS
+		__GOTO_LIBROS, __CREAR_LIBRO, __MODIFICAR_LIBRO, __ELIMINAR_LIBRO, __DEVOLVER_LIBRO,__PRESTAR_LIBRO
 		}
 	
 	public Controlador(Vista vista) {
@@ -72,6 +76,21 @@ public class Controlador implements ActionListener, MouseListener {
 		
 		this.vista.btnPerdonarUsuario.setActionCommand("__PERDONAR_USUARIO");
 		this.vista.btnPerdonarUsuario.addActionListener(this);
+		
+		this.vista.btnCrearLibro.setActionCommand("__CREAR_LIBRO");
+		this.vista.btnCrearLibro.addActionListener(this);
+		
+		this.vista.btnModificarLibro.setActionCommand("__MODIFICAR_LIBRO");
+		this.vista.btnModificarLibro.addActionListener(this);
+		
+		this.vista.btnEliminarLibro.setActionCommand("__ELIMINAR_LIBRO");
+		this.vista.btnEliminarLibro.addActionListener(this);
+		
+		this.vista.btnDisponibleLibro.setActionCommand("__DEVOLVER_LIBRO");
+		this.vista.btnDisponibleLibro.addActionListener(this);
+		
+		this.vista.btnCambiarAPrestar.setActionCommand("__PRESTAR_LIBRO");
+		this.vista.btnCambiarAPrestar.addActionListener(this);
 
 	}
 
@@ -150,7 +169,66 @@ public class Controlador implements ActionListener, MouseListener {
 			break;
 		case __GOTO_LIBROS:
 			gui.cambiarPanel(vista.pLibros);
-			//this.vista.tablaUsuarios.setModel(usuario.listarUsuarios());
+			this.vista.tablaLibros.setModel(libro.listarLibros());
+			break;
+		case __CREAR_LIBRO:
+			titulo=vista.cTituloLibro.getText().toString().trim();
+			nombre=vista.cNombreLibro.getText().toString().trim();
+			apellido=vista.cApellidoLibro.getText().toString().trim();
+			editorial=vista.cEditorialLibro.getText().toString().trim();
+			codigo=Integer.parseInt(vista.cTipoLibro.getText().trim());
+			try {
+				libro.insertarLibro(titulo, nombre, apellido, editorial, codigo);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			this.vista.tablaLibros.setModel(libro.listarLibros());
+			break;
+		case __MODIFICAR_LIBRO:
+			titulo=vista.cTituloLibro.getText().toString().trim();
+			nombre=vista.cNombreLibro.getText().toString().trim();
+			apellido=vista.cApellidoLibro.getText().toString().trim();
+			editorial=vista.cEditorialLibro.getText().toString().trim();
+			codigo=Integer.parseInt(vista.cTipoLibro.getText().trim());
+			id=Integer.parseInt(vista.cIDModificarLibro.getText().toString().trim());
+			try {
+				libro.modificarLibro(titulo, nombre, apellido, editorial, codigo,id);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			this.vista.tablaLibros.setModel(libro.listarLibros());
+			break;
+		case __ELIMINAR_LIBRO:
+			id=Integer.parseInt(vista.cIDEliminarLibro.getText().toString().trim());
+			try {
+				libro.borrarLibro(id);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			this.vista.tablaLibros.setModel(libro.listarLibros());
+			break;
+		case __DEVOLVER_LIBRO:
+			id=Integer.parseInt(vista.cIDDisponibleLibro.getText().toString().trim());
+			try {
+				libro.devolverLibro(id);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			this.vista.tablaLibros.setModel(libro.listarLibros());
+			break;
+		case __PRESTAR_LIBRO:
+			id=Integer.parseInt(vista.cIDPrestarLibro.getText().toString().trim());
+			try {
+				libro.prestarLibro(id);;
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			this.vista.tablaLibros.setModel(libro.listarLibros());
 			break;
 		}
 	}

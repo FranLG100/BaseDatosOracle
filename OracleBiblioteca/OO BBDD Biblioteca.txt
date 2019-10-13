@@ -95,6 +95,8 @@ END;
 
 
 ///////////////////////////////////////////////////////
+
+
 CREATE TABLE CLASE_LIBRO(
 id NUMBER,
 categoria VARCHAR2(255),
@@ -178,3 +180,22 @@ create or replace PROCEDURE      "DEVOLVER_LIBRO" (
 BEGIN
     UPDATE LIBROS L SET L.DISPONIBLE=1 WHERE L.id=identificador;
 END;
+
+
+///////////////////////////////////////////////////////
+
+CREATE SEQUENCE seq_prestamos
+   MINVALUE 1
+   START WITH 1
+   INCREMENT BY 1;
+
+-------------------------------
+
+CREATE TABLE PRESTAMOS(
+id NUMBER, 
+usuario REF USUARIO,
+libro REF LIBRO,
+finicio DATE,
+ffin DATE,
+fplazo DATE
+)

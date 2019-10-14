@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import modelo.GestorInterfaz;
+import modelo.Historicos;
 import modelo.Libro;
 import modelo.Prestamo;
 import modelo.Usuario;
@@ -23,6 +24,7 @@ public class Controlador implements ActionListener, MouseListener {
 	private Usuario usuario=new Usuario();
 	private Libro libro= new Libro();
 	private Prestamo prestamo=new Prestamo();
+	private Historicos historicos=new Historicos();
 	private String dni,nombre,apellido,calle,ciudad,email,zip;
 	private String titulo,editorial;
 	private int id;
@@ -35,6 +37,7 @@ public class Controlador implements ActionListener, MouseListener {
 		__CASTIGAR_USUARIO,__PERDONAR_USUARIO,
 		__GOTO_LIBROS, __CREAR_LIBRO, __MODIFICAR_LIBRO, __ELIMINAR_LIBRO, __DEVOLVER_LIBRO,__PRESTAR_LIBRO,
 		__GOTO_PRESTAMOS, __CREAR_PRESTAMO, __DEVOLVER_PRESTAMO, __ELIMINAR_PRESTAMO,
+		__GOTO_HISTORICOS,
 	}
 	
 	public Controlador(Vista vista) {
@@ -53,6 +56,9 @@ public class Controlador implements ActionListener, MouseListener {
 		} catch (InstantiationException ex) {
 		} catch (IllegalAccessException ex) {
 		}
+		
+		gui.cambiarPanel(vista.pRelleno);
+		gui.cambiarPanel(vista.pInicio);
 
 		// declara una acción y añade un escucha al evento producido por el componente
 		this.vista.bVolverPIPUs.setActionCommand("__GOTO_INICIO");
@@ -64,11 +70,17 @@ public class Controlador implements ActionListener, MouseListener {
 		this.vista.bVolverPIPPrest.setActionCommand("__GOTO_INICIO");
 		this.vista.bVolverPIPPrest.addActionListener(this);
 		
+		this.vista.bVolverPIPPrestHist.setActionCommand("__GOTO_INICIO");
+		this.vista.bVolverPIPPrestHist.addActionListener(this);
+		
 		this.vista.bLibrosPI.setActionCommand("__GOTO_LIBROS");
 		this.vista.bLibrosPI.addActionListener(this);
 		
 		this.vista.bUsuariosPI.setActionCommand("__GOTO_USUARIOS");
 		this.vista.bUsuariosPI.addActionListener(this);
+		
+		this.vista.bHistoricosPI.setActionCommand("__GOTO_HISTORICOS");
+		this.vista.bHistoricosPI.addActionListener(this);
 		
 		this.vista.btnCrearUsuario.setActionCommand("__CREAR_USUARIO");
 		this.vista.btnCrearUsuario.addActionListener(this);
@@ -300,6 +312,10 @@ public class Controlador implements ActionListener, MouseListener {
 			this.vista.tablaPrestamos.setModel(prestamo.listarPrestamo());
 			this.vista.tablaUsuariosPrestamos.setModel(usuario.listarUsuariosPrestamo());
 			this.vista.tablaLibrosPrestamos.setModel(libro.listarLibrosPrestamo());
+			break;
+		case __GOTO_HISTORICOS:
+			gui.cambiarPanel(vista.pHistoricos);
+			this.vista.tablaPrestamosHistoricos.setModel(historicos.listarHistoricos());
 			break;
 		}
 	}

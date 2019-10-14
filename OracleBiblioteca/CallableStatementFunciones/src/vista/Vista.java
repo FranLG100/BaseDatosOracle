@@ -32,6 +32,7 @@ public class Vista extends javax.swing.JFrame {
         bUsuariosPI = new javax.swing.JButton();
         bLibrosPI = new javax.swing.JButton();
         bPrestamosPI = new javax.swing.JButton();
+        bHistoricosPI = new javax.swing.JButton();
         pUsuarios = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
@@ -116,6 +117,16 @@ public class Vista extends javax.swing.JFrame {
         cFechaDevolucionPrestamo = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
         bVolverPIPPrest = new javax.swing.JButton();
+        pHistoricos = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tablaPrestamosHistoricos = new javax.swing.JTable();
+        jLabel35 = new javax.swing.JLabel();
+        bVolverPIPPrestHist = new javax.swing.JButton();
+        pRelleno = new javax.swing.JPanel();
+        bUsuariosPI1 = new javax.swing.JButton();
+        bLibrosPI1 = new javax.swing.JButton();
+        bPrestamosPI2 = new javax.swing.JButton();
+        bPrestamosPI3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -142,17 +153,25 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
+        bHistoricosPI.setText("Historicos");
+        bHistoricosPI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bHistoricosPIActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pInicioLayout = new javax.swing.GroupLayout(pInicio);
         pInicio.setLayout(pInicioLayout);
         pInicioLayout.setHorizontalGroup(
             pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pInicioLayout.createSequentialGroup()
-                .addGap(156, 156, 156)
+                .addGap(96, 96, 96)
                 .addGroup(pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bUsuariosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bLibrosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bPrestamosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(28, 28, 28))
+                    .addComponent(bPrestamosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bHistoricosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(100, 100, 100))
         );
         pInicioLayout.setVerticalGroup(
             pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,7 +182,9 @@ public class Vista extends javax.swing.JFrame {
                 .addComponent(bLibrosPI)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bPrestamosPI)
-                .addGap(20, 20, 20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bHistoricosPI)
+                .addGap(113, 113, 113))
         );
 
         pContainer.add(pInicio, "card2");
@@ -725,13 +746,117 @@ public class Vista extends javax.swing.JFrame {
 
         pContainer.add(pPrestamos, "card3");
 
+        tablaPrestamosHistoricos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane6.setViewportView(tablaPrestamosHistoricos);
+
+        jLabel35.setText("Prestamos Historicos");
+
+        bVolverPIPPrestHist.setText("Volver");
+
+        javax.swing.GroupLayout pHistoricosLayout = new javax.swing.GroupLayout(pHistoricos);
+        pHistoricos.setLayout(pHistoricosLayout);
+        pHistoricosLayout.setHorizontalGroup(
+            pHistoricosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pHistoricosLayout.createSequentialGroup()
+                .addGroup(pHistoricosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pHistoricosLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel35))
+                    .addGroup(pHistoricosLayout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addGroup(pHistoricosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(bVolverPIPPrestHist)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 732, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(117, 117, 117))
+        );
+        pHistoricosLayout.setVerticalGroup(
+            pHistoricosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pHistoricosLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel35)
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84)
+                .addComponent(bVolverPIPPrestHist)
+                .addGap(29, 29, 29))
+        );
+
+        pContainer.add(pHistoricos, "card3");
+
+        bUsuariosPI1.setText("Usuarios");
+        bUsuariosPI1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bUsuariosPI1ActionPerformed(evt);
+            }
+        });
+
+        bLibrosPI1.setText("Libros");
+        bLibrosPI1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLibrosPI1ActionPerformed(evt);
+            }
+        });
+
+        bPrestamosPI2.setText("Prestamos");
+        bPrestamosPI2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPrestamosPI2ActionPerformed(evt);
+            }
+        });
+
+        bPrestamosPI3.setText("Historicos");
+        bPrestamosPI3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPrestamosPI3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pRellenoLayout = new javax.swing.GroupLayout(pRelleno);
+        pRelleno.setLayout(pRellenoLayout);
+        pRellenoLayout.setHorizontalGroup(
+            pRellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pRellenoLayout.createSequentialGroup()
+                .addGap(96, 96, 96)
+                .addGroup(pRellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bUsuariosPI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bLibrosPI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bPrestamosPI2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bPrestamosPI3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(100, 100, 100))
+        );
+        pRellenoLayout.setVerticalGroup(
+            pRellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pRellenoLayout.createSequentialGroup()
+                .addGap(126, 126, 126)
+                .addComponent(bUsuariosPI1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bLibrosPI1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bPrestamosPI2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bPrestamosPI3)
+                .addGap(113, 113, 113))
+        );
+
+        pContainer.add(pRelleno, "card2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(13, 13, 13))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -760,6 +885,26 @@ public class Vista extends javax.swing.JFrame {
     private void btnEliminarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {                                                    
         // TODO add your handling code here:
     }                                                   
+
+    private void bHistoricosPIActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        // TODO add your handling code here:
+    }                                             
+
+    private void bUsuariosPI1ActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // TODO add your handling code here:
+    }                                            
+
+    private void bLibrosPI1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+    }                                          
+
+    private void bPrestamosPI2ActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        // TODO add your handling code here:
+    }                                             
+
+    private void bPrestamosPI3ActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        // TODO add your handling code here:
+    }                                             
 
     /**
      * @param args the command line arguments
@@ -797,11 +942,17 @@ public class Vista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify                     
+    public javax.swing.JButton bHistoricosPI;
     public javax.swing.JButton bLibrosPI;
+    public javax.swing.JButton bLibrosPI1;
     public javax.swing.JButton bPrestamosPI;
+    public javax.swing.JButton bPrestamosPI2;
+    public javax.swing.JButton bPrestamosPI3;
     public javax.swing.JButton bUsuariosPI;
+    public javax.swing.JButton bUsuariosPI1;
     public javax.swing.JButton bVolverPIPLib;
     public javax.swing.JButton bVolverPIPPrest;
+    public javax.swing.JButton bVolverPIPPrestHist;
     public javax.swing.JButton bVolverPIPUs;
     public javax.swing.JButton btnCambiarAPrestar;
     public javax.swing.JButton btnCastigarUsuario;
@@ -865,6 +1016,7 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -876,14 +1028,18 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     public javax.swing.JPanel pContainer;
+    public javax.swing.JPanel pHistoricos;
     public javax.swing.JPanel pInicio;
     public javax.swing.JPanel pLibros;
     public javax.swing.JPanel pPrestamos;
+    public javax.swing.JPanel pRelleno;
     public javax.swing.JPanel pUsuarios;
     public javax.swing.JTable tablaLibros;
     public javax.swing.JTable tablaLibrosPrestamos;
     public javax.swing.JTable tablaPrestamos;
+    public javax.swing.JTable tablaPrestamosHistoricos;
     public javax.swing.JTable tablaUsuarios;
     public javax.swing.JTable tablaUsuariosPrestamos;
     // End of variables declaration                   

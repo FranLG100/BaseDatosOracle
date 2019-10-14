@@ -252,3 +252,25 @@ IF nffin>finalizacion THEN
 UPDATE USUARIOS SET PENALIZADO=1 WHERE ID=(SELECT DEREF(USUARIO).ID FROM PRESTAMOS WHERE ID=nprestamo);
 END IF;
 END;
+
+/////////////////////////////////////////////////////////
+
+CREATE TABLE HISTORICOS(
+id NUMBER,
+usuario HR.USUARIO,
+libro HR.LIBRO,
+finicio DATE,
+ffin DATE,
+fplazo DATE,
+PRIMARY KEY(id)
+)
+----------------------------------------------------------
+CREATE SEQUENCE seq_historicos
+   MINVALUE 1
+   START WITH 1
+   INCREMENT BY 1;
+----------------------------------------------------------
+CREATE TRIGGER INSERTAR_HISTORICOS BEFORE DELETE ON PRESTAMOS FOR EACH ROW
+BEGIN
+INSERT INTO HISTORICOS VALUES(seq_historicos.NEXTVAL,DEREF(:old.USUARIO),DEREF(:old.LIBRO),:old.finicio,:old.ffin,:old.fplazo);
+END;

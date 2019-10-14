@@ -20,12 +20,19 @@ public class Prestamo {
 	
 	public void insertarPrestamo(int idUsuario, int idLibro, String fechInicio) throws SQLException {
 		//EJEMPLO PROCEDIMIENTO
+		int control=0;
 		con=Conexion.getConnection();
-		cstmt = con.prepareCall("{call INSERTAR_PRESTAMO(?,?,?)}");
+		cstmt = con.prepareCall("{call INSERTAR_PRESTAMO(?,?,?,?)}");
 		 cstmt.setInt(1, idUsuario);
 		 cstmt.setInt(2, idLibro);
 		 cstmt.setString(3, fechInicio);
+		 cstmt.registerOutParameter(4, java.sql.Types.INTEGER);
          cstmt.execute();
+         control=cstmt.getInt(4);
+         if(control==1)
+        	 System.out.println("Prestamo realizado");
+         else
+        	 System.out.println("Prestamo no posible");
          cstmt.close();
 		con.close();
 	}

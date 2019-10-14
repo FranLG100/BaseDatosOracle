@@ -219,7 +219,7 @@ IS
    PROCEDURE obtener_prestamos(lista_registros OUT cursor_dinamico) IS 
     BEGIN      
         OPEN lista_registros FOR 
-        SELECT ID,P.USUARIO.NOMBRE,P.USUARIO.APELLIDO,P.LIBRO.TITULO,P.FINICIO,P.FFIN,P.FPLAZO FROM PRESTAMOS P;
+        SELECT ID,P.USUARIO.ID,P.LIBRO.TITULO,P.FINICIO,P.FFIN,P.FPLAZO FROM PRESTAMOS P ORDER BY P.ID;
   END;
   END;
 ---------------------------------------------------

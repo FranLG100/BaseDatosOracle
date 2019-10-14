@@ -140,4 +140,64 @@ public class Libro {
 		return plantilla;
 	}
 	
+	
+	public DefaultTableModel listarLibrosPrestamo() {
+
+		tamanho=0;
+		String[] headers = { "ID","Titulo","Autor","Disponible"};
+		DefaultTableModel plantilla = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+
+		try {
+			con=Conexion.getConnection();
+			cstmt=con.prepareCall("{call CONSULTA_LIBROS.obtener_libros(?)}");
+		    cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+		    cstmt.executeQuery();
+		    ResultSet cursor = (ResultSet)cstmt.getObject(1);
+		    
+		    while(cursor.next()) {
+		    	tamanho++;
+		    }
+		    cursor.close();
+		    cstmt.close();
+		    con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String[][] filas = new String[tamanho][4];
+
+		try {
+			int id,disponibilidad;
+			String titulo,nombre;
+			con=Conexion.getConnection();
+			cstmt=con.prepareCall("{call CONSULTA_LIBROS.obtener_libros(?)}");
+		    cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+		    cstmt.executeQuery();
+		    ResultSet cursor = (ResultSet)cstmt.getObject(1);
+			int i = 0;
+			while (cursor.next()) {
+				id = cursor.getInt(1);
+				titulo=cursor.getString(2);
+				nombre=cursor.getString(3)+" "+cursor.getString(4);
+				disponibilidad=cursor.getInt(7);
+				filas[i][0] = Integer.toString(id);
+				filas[i][1] = titulo;
+				filas[i][2] = nombre;
+				filas[i][3] = Integer.toString(disponibilidad);
+				i++;
+				System.out.println(filas.toString());
+			}
+			con.close();
+			plantilla.setDataVector(filas, headers);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return plantilla;
+	}
+	
 }

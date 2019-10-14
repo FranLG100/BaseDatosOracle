@@ -195,5 +195,65 @@ public class Usuario {
 		return plantilla;
 	}
 	
+	public DefaultTableModel listarUsuariosPrestamo() {
+
+		tamanho=0;
+		String[] headers = { "ID","DNI","Nombre","Penalizado" };
+		DefaultTableModel plantilla = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+
+		try {
+			con=Conexion.getConnection();
+			cstmt=con.prepareCall("{call CONSULTA_USUARIOS.obtener_usuarios(?)}");
+		    cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+		    cstmt.executeQuery();
+		    ResultSet cursor = (ResultSet)cstmt.getObject(1);
+		    
+		    while(cursor.next()) {
+		    	tamanho++;
+		        System.out.println("ID = " + cursor.getInt(1)+" DNI:"+cursor.getString(2)+" Nombre:"+cursor.getString(3)+" Apellido:"+cursor.getString(4)+" Calle:"+cursor.getString(5)+" Ciudad:"+cursor.getString(6)+" Zip:"+cursor.getInt(7)+"  Email:"+cursor.getString(8));
+		    }
+		    cursor.close();
+		    cstmt.close();
+		    con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String[][] filas = new String[tamanho][4];
+
+		try {
+			int id,penalizado;
+			String dni,nombre;
+			con=Conexion.getConnection();
+			cstmt=con.prepareCall("{call CONSULTA_USUARIOS.obtener_usuarios(?)}");
+		    cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+		    cstmt.executeQuery();
+		    ResultSet cursor = (ResultSet)cstmt.getObject(1);
+			int i = 0;
+			while (cursor.next()) {
+				id = cursor.getInt(1);
+				dni=cursor.getString(2);
+				nombre=cursor.getString(3)+" "+cursor.getString(4);
+				penalizado=cursor.getInt(9);
+				filas[i][0] = Integer.toString(id);
+				filas[i][1] = dni;
+				filas[i][2] = nombre;
+				filas[i][3] = Integer.toString(penalizado);
+				i++;
+				System.out.println(filas.toString());
+			}
+			con.close();
+			plantilla.setDataVector(filas, headers);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return plantilla;
+	}
+	
 	
 }

@@ -31,6 +31,7 @@ public class Vista extends javax.swing.JFrame {
         pInicio = new javax.swing.JPanel();
         bUsuariosPI = new javax.swing.JButton();
         bLibrosPI = new javax.swing.JButton();
+        bPrestamosPI = new javax.swing.JButton();
         pUsuarios = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
@@ -89,6 +90,32 @@ public class Vista extends javax.swing.JFrame {
         btnCambiarAPrestar = new javax.swing.JButton();
         cIDPrestarLibro = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
+        pPrestamos = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaPrestamos = new javax.swing.JTable();
+        jLabel18 = new javax.swing.JLabel();
+        cUsuarioPrestamo = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        cLibroPrestamo = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        cFechaInicioPrestamo = new javax.swing.JTextField();
+        btnCrearPrestamo = new javax.swing.JButton();
+        btnDevolverLibroPrestamo = new javax.swing.JButton();
+        btnEliminarPrestamo = new javax.swing.JButton();
+        cIDEliminarPrestamo = new javax.swing.JTextField();
+        cIDDevolverLibroPrestamo = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tablaUsuariosPrestamos = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tablaLibrosPrestamos = new javax.swing.JTable();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        cFechaDevolucionPrestamo = new javax.swing.JTextField();
+        jLabel33 = new javax.swing.JLabel();
+        bVolverPIPPrest = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,6 +135,13 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
+        bPrestamosPI.setText("Prestamos");
+        bPrestamosPI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPrestamosPIActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pInicioLayout = new javax.swing.GroupLayout(pInicio);
         pInicio.setLayout(pInicioLayout);
         pInicioLayout.setHorizontalGroup(
@@ -116,8 +150,9 @@ public class Vista extends javax.swing.JFrame {
                 .addGap(156, 156, 156)
                 .addGroup(pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bUsuariosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bLibrosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(bLibrosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bPrestamosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
         pInicioLayout.setVerticalGroup(
             pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,7 +161,9 @@ public class Vista extends javax.swing.JFrame {
                 .addComponent(bUsuariosPI)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bLibrosPI)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bPrestamosPI)
+                .addGap(20, 20, 20))
         );
 
         pContainer.add(pInicio, "card2");
@@ -494,13 +531,207 @@ public class Vista extends javax.swing.JFrame {
 
         pContainer.add(pLibros, "card3");
 
+        tablaPrestamos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane3.setViewportView(tablaPrestamos);
+
+        jLabel18.setText("ID Usuario");
+
+        cUsuarioPrestamo.setText(" ");
+
+        jLabel23.setText("ID Libro");
+
+        cLibroPrestamo.setText(" ");
+
+        jLabel24.setText("Fecha Inicio (dd/mm/aa)");
+
+        cFechaInicioPrestamo.setText(" ");
+
+        btnCrearPrestamo.setText("Crear Prestamo");
+
+        btnDevolverLibroPrestamo.setText("Devolver Libro");
+
+        btnEliminarPrestamo.setText("Eliminar Prestamo");
+        btnEliminarPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarPrestamoActionPerformed(evt);
+            }
+        });
+
+        cIDEliminarPrestamo.setText(" ");
+
+        cIDDevolverLibroPrestamo.setText(" ");
+
+        jLabel27.setText("ID Prestamo");
+
+        jLabel28.setText("ID Prestamo");
+
+        tablaUsuariosPrestamos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane4.setViewportView(tablaUsuariosPrestamos);
+
+        tablaLibrosPrestamos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane5.setViewportView(tablaLibrosPrestamos);
+
+        jLabel12.setText("Prestamos");
+
+        jLabel31.setText("Usuarios");
+
+        jLabel32.setText("Libros");
+
+        cFechaDevolucionPrestamo.setText(" ");
+
+        jLabel33.setText("Fecha Devolucion  (dd/mm/aa)");
+
+        bVolverPIPPrest.setText("Volver");
+
+        javax.swing.GroupLayout pPrestamosLayout = new javax.swing.GroupLayout(pPrestamos);
+        pPrestamos.setLayout(pPrestamosLayout);
+        pPrestamosLayout.setHorizontalGroup(
+            pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPrestamosLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(pPrestamosLayout.createSequentialGroup()
+                        .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnDevolverLibroPrestamo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCrearPrestamo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminarPrestamo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(37, 37, 37)
+                        .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cIDEliminarPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cIDDevolverLibroPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel28)
+                            .addGroup(pPrestamosLayout.createSequentialGroup()
+                                .addComponent(jLabel27)
+                                .addGap(38, 38, 38)
+                                .addComponent(cFechaDevolucionPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel33))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pPrestamosLayout.createSequentialGroup()
+                        .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18)
+                            .addComponent(cUsuarioPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel23)
+                            .addComponent(cLibroPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel24)
+                            .addComponent(cFechaInicioPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39)
+                        .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pPrestamosLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel31)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel32)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pPrestamosLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bVolverPIPPrest)))
+                .addContainerGap())
+        );
+        pPrestamosLayout.setVerticalGroup(
+            pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPrestamosLayout.createSequentialGroup()
+                .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pPrestamosLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pPrestamosLayout.createSequentialGroup()
+                        .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pPrestamosLayout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cUsuarioPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cLibroPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel24)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cFechaInicioPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(198, 198, 198)
+                                .addComponent(btnCrearPrestamo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pPrestamosLayout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel31)
+                                    .addComponent(jLabel32))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                .addGap(71, 71, 71)))
+                        .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cFechaDevolucionPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel33))
+                            .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnDevolverLibroPrestamo)
+                                .addComponent(cIDDevolverLibroPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel27)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pPrestamosLayout.createSequentialGroup()
+                        .addGroup(pPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEliminarPrestamo)
+                            .addComponent(cIDEliminarPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel28))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pPrestamosLayout.createSequentialGroup()
+                        .addComponent(bVolverPIPPrest)
+                        .addGap(21, 21, 21))))
+        );
+
+        pContainer.add(pPrestamos, "card3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 966, Short.MAX_VALUE)
-                .addGap(43, 43, 43))
+                .addComponent(pContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(13, 13, 13))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -521,6 +752,14 @@ public class Vista extends javax.swing.JFrame {
     private void btnEliminarLibroActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         // TODO add your handling code here:
     }                                                
+
+    private void bPrestamosPIActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // TODO add your handling code here:
+    }                                            
+
+    private void btnEliminarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+        // TODO add your handling code here:
+    }                                                   
 
     /**
      * @param args the command line arguments
@@ -559,15 +798,20 @@ public class Vista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify                     
     public javax.swing.JButton bLibrosPI;
+    public javax.swing.JButton bPrestamosPI;
     public javax.swing.JButton bUsuariosPI;
     public javax.swing.JButton bVolverPIPLib;
+    public javax.swing.JButton bVolverPIPPrest;
     public javax.swing.JButton bVolverPIPUs;
     public javax.swing.JButton btnCambiarAPrestar;
     public javax.swing.JButton btnCastigarUsuario;
     public javax.swing.JButton btnCrearLibro;
+    public javax.swing.JButton btnCrearPrestamo;
     public javax.swing.JButton btnCrearUsuario;
+    public javax.swing.JButton btnDevolverLibroPrestamo;
     public javax.swing.JButton btnDisponibleLibro;
     public javax.swing.JButton btnEliminarLibro;
+    public javax.swing.JButton btnEliminarPrestamo;
     public javax.swing.JButton btnEliminarUsuario;
     public javax.swing.JButton btnModificarLibro;
     public javax.swing.JButton btnModificarUsuario;
@@ -579,33 +823,48 @@ public class Vista extends javax.swing.JFrame {
     public javax.swing.JTextField cDNIUsuario;
     public javax.swing.JTextField cEditorialLibro;
     public javax.swing.JTextField cEmailUsuario;
+    public javax.swing.JTextField cFechaDevolucionPrestamo;
+    public javax.swing.JTextField cFechaInicioPrestamo;
+    public javax.swing.JTextField cIDDevolverLibroPrestamo;
     public javax.swing.JTextField cIDDisponibleLibro;
     public javax.swing.JTextField cIDEliminarLibro;
+    public javax.swing.JTextField cIDEliminarPrestamo;
     public javax.swing.JTextField cIDEliminarUsuario;
     public javax.swing.JTextField cIDModificarLibro;
     public javax.swing.JTextField cIDModificarUsuario;
     public javax.swing.JTextField cIDPenalizarUsuario;
     public javax.swing.JTextField cIDPerdonarUsuario;
     public javax.swing.JTextField cIDPrestarLibro;
+    public javax.swing.JTextField cLibroPrestamo;
     public javax.swing.JTextField cNombreLibro;
     public javax.swing.JTextField cNombreUsuario;
     public javax.swing.JTextField cTipoLibro;
     public javax.swing.JTextField cTituloLibro;
+    public javax.swing.JTextField cUsuarioPrestamo;
     public javax.swing.JTextField cZipUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -614,12 +873,18 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     public javax.swing.JPanel pContainer;
     public javax.swing.JPanel pInicio;
     public javax.swing.JPanel pLibros;
+    public javax.swing.JPanel pPrestamos;
     public javax.swing.JPanel pUsuarios;
     public javax.swing.JTable tablaLibros;
+    public javax.swing.JTable tablaLibrosPrestamos;
+    public javax.swing.JTable tablaPrestamos;
     public javax.swing.JTable tablaUsuarios;
+    public javax.swing.JTable tablaUsuariosPrestamos;
     // End of variables declaration                   
 }
-

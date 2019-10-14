@@ -12,6 +12,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import modelo.GestorInterfaz;
 import modelo.Libro;
+import modelo.Prestamo;
 import modelo.Usuario;
 import vista.Vista;
 
@@ -21,16 +22,20 @@ public class Controlador implements ActionListener, MouseListener {
 	private GestorInterfaz gui;
 	private Usuario usuario=new Usuario();
 	private Libro libro= new Libro();
+	private Prestamo prestamo=new Prestamo();
 	private String dni,nombre,apellido,calle,ciudad,email,zip;
 	private String titulo,editorial;
 	private int id;
 	private int codigo,disponibilidad;
+	private int idUsuario, idLibro,idPrestamo;
+	private String finicio,ffin;
 	
 	public enum AccionMVC {
 		__GOTO_USUARIOS, __GOTO_INICIO, __CREAR_USUARIO, __MODIFICAR_USUARIO, __ELIMINAR_USUARIO,
 		__CASTIGAR_USUARIO,__PERDONAR_USUARIO,
-		__GOTO_LIBROS, __CREAR_LIBRO, __MODIFICAR_LIBRO, __ELIMINAR_LIBRO, __DEVOLVER_LIBRO,__PRESTAR_LIBRO
-		}
+		__GOTO_LIBROS, __CREAR_LIBRO, __MODIFICAR_LIBRO, __ELIMINAR_LIBRO, __DEVOLVER_LIBRO,__PRESTAR_LIBRO,
+		__GOTO_PRESTAMOS, __CREAR_PRESTAMO, __DEVOLVER_PRESTAMO, __ELIMINAR_PRESTAMO,
+	}
 	
 	public Controlador(Vista vista) {
 		this.vista = vista;
@@ -55,6 +60,9 @@ public class Controlador implements ActionListener, MouseListener {
 		
 		this.vista.bVolverPIPLib.setActionCommand("__GOTO_INICIO");
 		this.vista.bVolverPIPLib.addActionListener(this);
+		
+		this.vista.bVolverPIPPrest.setActionCommand("__GOTO_INICIO");
+		this.vista.bVolverPIPPrest.addActionListener(this);
 		
 		this.vista.bLibrosPI.setActionCommand("__GOTO_LIBROS");
 		this.vista.bLibrosPI.addActionListener(this);
@@ -91,6 +99,22 @@ public class Controlador implements ActionListener, MouseListener {
 		
 		this.vista.btnCambiarAPrestar.setActionCommand("__PRESTAR_LIBRO");
 		this.vista.btnCambiarAPrestar.addActionListener(this);
+		
+		
+		
+		this.vista.bPrestamosPI.setActionCommand("__GOTO_PRESTAMOS");
+		this.vista.bPrestamosPI.addActionListener(this);
+		
+		this.vista.btnCrearPrestamo.setActionCommand("__CREAR_PRESTAMO");
+		this.vista.btnCrearPrestamo.addActionListener(this);
+		
+		this.vista.btnDevolverLibroPrestamo.setActionCommand("__DEVOLVER_PRESTAMO");
+		this.vista.btnDevolverLibroPrestamo.addActionListener(this);
+		
+		this.vista.btnEliminarPrestamo.setActionCommand("__ELIMINAR_PRESTAMO");
+		this.vista.btnEliminarPrestamo.addActionListener(this);
+		
+
 
 	}
 
@@ -229,6 +253,53 @@ public class Controlador implements ActionListener, MouseListener {
 				e1.printStackTrace();
 			}
 			this.vista.tablaLibros.setModel(libro.listarLibros());
+			break;
+			
+			
+		case __GOTO_PRESTAMOS:
+			gui.cambiarPanel(vista.pPrestamos);
+			this.vista.tablaPrestamos.setModel(prestamo.listarPrestamo());
+			this.vista.tablaUsuariosPrestamos.setModel(usuario.listarUsuariosPrestamo());
+			this.vista.tablaLibrosPrestamos.setModel(libro.listarLibrosPrestamo());
+			break;
+		case __CREAR_PRESTAMO:
+			idUsuario=Integer.parseInt(vista.cUsuarioPrestamo.getText().toString().trim());
+			idLibro=Integer.parseInt(vista.cLibroPrestamo.getText().toString().trim());
+			finicio=vista.cFechaInicioPrestamo.getText().toString().trim();
+			try {
+				prestamo.insertarPrestamo(idUsuario, idLibro, finicio);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			this.vista.tablaPrestamos.setModel(prestamo.listarPrestamo());
+			this.vista.tablaUsuariosPrestamos.setModel(usuario.listarUsuariosPrestamo());
+			this.vista.tablaLibrosPrestamos.setModel(libro.listarLibrosPrestamo());
+			break;
+		case __DEVOLVER_PRESTAMO:
+			idPrestamo=Integer.parseInt(vista.cIDDevolverLibroPrestamo.getText().toString().trim());
+			ffin=vista.cFechaDevolucionPrestamo.getText().toString().trim();
+			try {
+				prestamo.devolverPrestamo(idPrestamo, ffin);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			this.vista.tablaPrestamos.setModel(prestamo.listarPrestamo());
+			this.vista.tablaUsuariosPrestamos.setModel(usuario.listarUsuariosPrestamo());
+			this.vista.tablaLibrosPrestamos.setModel(libro.listarLibrosPrestamo());
+			break;
+		case __ELIMINAR_PRESTAMO:
+			id=Integer.parseInt(vista.cIDEliminarPrestamo.getText().toString().trim());
+			try {
+				prestamo.borrarPrestamo(id);;
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			this.vista.tablaPrestamos.setModel(prestamo.listarPrestamo());
+			this.vista.tablaUsuariosPrestamos.setModel(usuario.listarUsuariosPrestamo());
+			this.vista.tablaLibrosPrestamos.setModel(libro.listarLibrosPrestamo());
 			break;
 		}
 	}

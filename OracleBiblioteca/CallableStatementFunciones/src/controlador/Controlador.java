@@ -4,8 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -15,11 +17,13 @@ import modelo.Historicos;
 import modelo.Libro;
 import modelo.Prestamo;
 import modelo.Usuario;
+import utilesFran.Amadeus;
 import vista.Vista;
 
 public class Controlador implements ActionListener, MouseListener {
 
 	private Vista vista;
+	private Amadeus amadeus=new Amadeus();
 	private GestorInterfaz gui;
 	private Usuario usuario=new Usuario();
 	private Libro libro= new Libro();
@@ -31,6 +35,7 @@ public class Controlador implements ActionListener, MouseListener {
 	private int codigo,disponibilidad;
 	private int idUsuario, idLibro,idPrestamo;
 	private String finicio,ffin;
+	private boolean validez;
 	
 	public enum AccionMVC {
 		__GOTO_USUARIOS, __GOTO_INICIO, __CREAR_USUARIO, __MODIFICAR_USUARIO, __ELIMINAR_USUARIO,
@@ -141,6 +146,48 @@ public class Controlador implements ActionListener, MouseListener {
 			this.vista.tablaUsuarios.setModel(usuario.listarUsuarios());
 			break;
 		case __CREAR_USUARIO:
+			validez=true;
+			boolean dniValido = false,nombreValido = false,apellidoValido = false,calleValido = false,ciudadValido = false,emailValido = false,zipValido = false;
+			try {
+				dniValido=amadeus.compruebaTextoVacio(vista.cDNIUsuario.getText().toString().trim());
+				nombreValido=amadeus.compruebaTextoVacio(vista.cNombreUsuario.getText().toString().trim());
+				apellidoValido=amadeus.compruebaTextoVacio(vista.cApellidoUsuario.getText().toString().trim());
+				calleValido=amadeus.compruebaTextoVacio(vista.cCalleUsuario.getText().toString().trim());
+				ciudadValido=amadeus.compruebaTextoVacio(vista.cCiudadUsuario.getText().toString().trim());
+				emailValido=amadeus.compruebaTextoVacio(vista.cEmailUsuario.getText().toString().trim());
+				zipValido=amadeus.compruebaTextoVacio(vista.cZipUsuario.getText().toString().trim());
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			if(!dniValido || !nombreValido || !apellidoValido || !calleValido || !ciudadValido || !emailValido || !zipValido) {
+				validez=false;
+				JOptionPane.showMessageDialog(null, "Hay campos en blanco");
+			}
+			try {
+				
+				dniValido=amadeus.compruebaNIF(vista.cDNIUsuario.getText().toString().trim());
+				
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			if(!dniValido) {
+				validez=false;
+				JOptionPane.showMessageDialog(null, "DNI invalido");
+			}
+			try {
+				zipValido=amadeus.controlaIntPositivoValido(Integer.parseInt(this.vista.cZipUsuario.getText().toString().trim()));
+			} catch (NumberFormatException | IOException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Caracteres Invalidos en Zip");
+				validez=false;
+			}
+			if(!zipValido) {
+				JOptionPane.showMessageDialog(null, "Introduzca un valor positivo de Zip");
+				validez=false;
+			}
+			if(validez) {
 			dni=vista.cDNIUsuario.getText().toString().trim();
 			nombre=vista.cNombreUsuario.getText().toString().trim();
 			apellido=vista.cApellidoUsuario.getText().toString().trim();
@@ -155,6 +202,7 @@ public class Controlador implements ActionListener, MouseListener {
 				e1.printStackTrace();
 			}
 			this.vista.tablaUsuarios.setModel(usuario.listarUsuarios());
+			}
 			break;
 		case __MODIFICAR_USUARIO:
 			dni=vista.cDNIUsuario.getText().toString().trim();

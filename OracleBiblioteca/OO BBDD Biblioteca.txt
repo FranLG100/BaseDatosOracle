@@ -274,3 +274,20 @@ CREATE TRIGGER INSERTAR_HISTORICOS BEFORE DELETE ON PRESTAMOS FOR EACH ROW
 BEGIN
 INSERT INTO HISTORICOS VALUES(seq_historicos.NEXTVAL,DEREF(:old.USUARIO),DEREF(:old.LIBRO),:old.finicio,:old.ffin,:old.fplazo);
 END;
+------------------------------------------------------------
+create or replace PACKAGE      "CONSULTA_HISTORICOS" 
+AS
+
+    TYPE cursor_dinamico IS REF CURSOR;
+    PROCEDURE obtener_historicos(lista_registros OUT cursor_dinamico);
+
+END;
+-----------------------------------------------
+create or replace PACKAGE BODY CONSULTA_HISTORICOS
+IS
+   PROCEDURE obtener_historicos(lista_registros OUT cursor_dinamico) IS 
+    BEGIN      
+        OPEN lista_registros FOR 
+        SELECT ID,H.USUARIO.DNI, H.USUARIO.NOMBRE, H.USUARIO.APELLIDO,H.LIBRO.TITULO, H.LIBRO.AUTOR.NOMBRE, H.LIBRO.AUTOR.APELLIDO, H.FINICIO,H.FFIN,H.FPLAZO FROM HISTORICOS H;
+  END;
+  END;

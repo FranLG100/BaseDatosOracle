@@ -124,13 +124,35 @@ apellido VARCHAR2(255)
 
 /
 
-CREATE OR REPLACE TYPE LIBRO AS OBJECT(
-id NUMBER(255),
+CREATE OR REPLACE TYPE LECTOR AS OBJECT(
+nombre VARCHAR2(255),
+apellido VARCHAR2(255),
+MEMBER FUNCTION GET_LECTOR RETURN VARCHAR2
+);
+
+/
+
+CREATE OR REPLACE TYPE BODY LECTOR AS MEMBER FUNCTION GET_LECTOR RETURN VARCHAR2
+IS
+BEGIN
+RETURN apellido||', '||nombre;
+END;
+END;
+
+/
+
+create or replace TYPE PUBLICACION AS OBJECT(
+id NUMBER,
 titulo VARCHAR2(255),
 autor HR.AUTOR,
-editor VARCHAR2(255),
-clase NUMBER,
 disponible NUMBER
+)NOT FINAL;
+
+/
+
+CREATE OR REPLACE TYPE LIBRO UNDER PUBLICACION(
+editor VARCHAR2(255),
+clase NUMBER
 );
 
 /
@@ -178,7 +200,7 @@ create or replace PROCEDURE      "INSERTAR_LIBRO" (
 	clase IN LIBROS.clase%TYPE
 ) IS
 BEGIN
-    INSERT INTO LIBROS VALUES(seq_libro.NEXTVAL,titulo,AUTOR(nombre,apellido),editor,clase,1);
+    INSERT INTO LIBROS VALUES(seq_libro.NEXTVAL,titulo,AUTOR(nombre,apellido),1,editor,clase);
 END;
 
 /
@@ -225,10 +247,90 @@ END;
 
 /
 
+CREATE OR REPLACE TYPE AUDIOLIBRO UNDER PUBLICACION(
+sello VARCHAR2(255),
+lector HR.LECTOR
+);
+
+/
+
+CREATE SEQUENCE seq_cds
+   MINVALUE 1
+   START WITH 1
+   INCREMENT BY 1;
+
+/
+
 CREATE SEQUENCE seq_prestamos
    MINVALUE 1
    START WITH 1
    INCREMENT BY 1;
+
+/
+
+CREATE TABLE AUDIOLIBROS OF AUDIOLIBRO(
+id PRIMARY KEY
+)
+
+/
+
+create or replace PROCEDURE      "INSERTAR_AUDIOLIBRO" (
+      titulo  IN AUDIOLIBROS.titulo%TYPE,
+      nombre IN AUDIOLIBROS.AUTOR.nombre%TYPE,
+	apellido  IN AUDIOLIBROS.AUTOR.apellido%TYPE,
+      sello IN AUDIOLIBROS.sello%TYPE,
+	lnombre IN AUDIOLIBROS.LECTOR.nombre%TYPE,
+	lapellido IN AUDIOLIBROS.LECTOR.apellido%TYPE
+) IS
+BEGIN
+    INSERT INTO AUDIOLIBROS VALUES(seq_cds.NEXTVAL,titulo,AUTOR(nombre,apellido),1,sello,LECTOR(lnombre,lapellido));
+END;
+
+/
+
+create or replace PROCEDURE      "MODIFICAR_AUDIOLIBRO" (
+      ntitulo  IN AUDIOLIBROS.titulo%TYPE,
+      nnombre IN AUDIOLIBROS.AUTOR.nombre%TYPE,
+	napellido  IN AUDIOLIBROS.AUTOR.apellido%TYPE,
+      nsello IN AUDIOLIBROS.sello%TYPE,
+	nlnombre IN AUDIOLIBROS.LECTOR.nombre%TYPE,
+	nlapellido IN AUDIOLIBROS.LECTOR.apellido%TYPE,
+	identificador  IN AUDIOLIBROS.id%TYPE
+	
+) IS
+BEGIN
+    UPDATE AUDIOLIBROS L SET L.titulo=ntitulo, L.AUTOR.nombre=nnombre, L.AUTOR.apellido=napellido, L.sello=nsello, L.LECTOR.nombre=nlnombre, L.LECTOR.apellido=nlapellido WHERE L.id=identificador;
+END;
+
+/
+
+create or replace PROCEDURE      "BORRAR_AUDIOLIBRO" (
+      identificador  IN AUDIOLIBROS.id%TYPE
+) IS
+BEGIN
+    DELETE FROM AUDIOLIBROS L WHERE L.id=identificador;
+END;
+
+/
+
+create or replace PACKAGE      "CONSULTA_AUDIOLIBROS" 
+AS
+
+    TYPE cursor_dinamico IS REF CURSOR;
+    PROCEDURE obtener_audiolibros(lista_registros OUT cursor_dinamico);
+
+END;
+
+/
+
+create or replace PACKAGE BODY CONSULTA_AUDIOLIBROS
+IS
+   PROCEDURE obtener_audiolibros(lista_registros OUT cursor_dinamico) IS 
+    BEGIN      
+        OPEN lista_registros FOR 
+        SELECT A.ID,A.TITULO, A.AUTOR.NOMBRE, A.AUTOR.APELLIDO, A.SELLO, A.LECTOR.GET_LECTOR(), A.DISPONIBLE  FROM AUDIOLIBROS A ORDER BY ID;
+  END;
+  END;
 
 /
 
@@ -351,3 +453,5 @@ IS
 --INSERT INTO PRESTAMOS(ID,USUARIO,LIBRO,FINICIO,FFIN,FPLAZO) SELECT seq_libro.NEXTVAL, REF(U),REF(L),'13/10/19',NULL,'20/10/19' FROM USUARIOS U, LIBROS L WHERE L.ID=1 AND U.ID=26;
 
 --SELECT ID,P.USUARIO.NOMBRE,P.USUARIO.APELLIDO,P.LIBRO.TITULO,P.FINICIO,P.FFIN,P.FPLAZO FROM PRESTAMOS P;
+
+--SELECT A.LECTOR.GET_LECTOR() FROM AUDIOLIBROS A WHERE ID=1;

@@ -180,6 +180,7 @@ public class Libro {
 		    cstmt.executeQuery();
 		    ResultSet cursor = (ResultSet)cstmt.getObject(1);
 			int i = 0;
+			//
 			while (cursor.next()) {
 				id = cursor.getInt(1);
 				titulo=cursor.getString(2);

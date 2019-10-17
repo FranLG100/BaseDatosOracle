@@ -479,6 +479,7 @@ public class Controlador implements ActionListener, MouseListener {
 			break;
 		case __CREAR_PRESTAMO:
 			validez=true;
+			int control=0;
 			boolean idUsuarioValido=false,idLibroValido=false,finicioValido=false;
 			try {
 				idUsuarioValido=amadeus.compruebaTextoVacio(vista.cUsuarioPrestamo.getText().toString().trim());
@@ -519,7 +520,7 @@ public class Controlador implements ActionListener, MouseListener {
 				idLibro=Integer.parseInt(vista.cLibroPrestamo.getText().toString().trim());
 				finicio=vista.cFechaInicioPrestamo.getText().toString().trim();
 				try {
-					prestamo.insertarPrestamo(idUsuario, idLibro, finicio);
+					control=prestamo.insertarPrestamo(idUsuario, idLibro, finicio);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -529,6 +530,8 @@ public class Controlador implements ActionListener, MouseListener {
 				this.vista.tablaPrestamos.setModel(prestamo.listarPrestamo());
 				this.vista.tablaUsuariosPrestamos.setModel(usuario.listarUsuariosPrestamo());
 				this.vista.tablaLibrosPrestamos.setModel(libro.listarLibrosPrestamo());
+				if(control!=1)
+					JOptionPane.showMessageDialog(null, "Prestamo no posible");
 			}
 			break;
 		case __DEVOLVER_PRESTAMO:

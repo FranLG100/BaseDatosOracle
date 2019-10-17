@@ -1,10 +1,10 @@
-CREATE OR REPLACE TYPE TELEFONO AS VARRAY(3) OF VARCHAR2(9);
-
 CREATE OR REPLACE TYPE DIRECCION AS OBJECT(
 calle VARCHAR2(255),
 ciudad VARCHAR2(255),
 codpost NUMBER(5)
 );
+
+/
 
 create or replace TYPE USUARIO AS OBJECT(
 id NUMBER,
@@ -12,8 +12,11 @@ dni VARCHAR2(255),
 nombre VARCHAR2(255),
 apellido VARCHAR2(255),
 direccion HR.DIRECCION,
-email VARCHAR2(255)
+email VARCHAR2(255),
+penalizado NUMBER
 );
+
+/
 
 CREATE SEQUENCE seq_usuario
    MINVALUE 1
@@ -24,9 +27,8 @@ CREATE TABLE USUARIOS OF USUARIO(
 id PRIMARY KEY
 );
 
-INSERT INTO USUARIOS VALUES(seq_usuario.NEXTVAL,DNI,NOMBRE,APELLIDO,DIRECCION(),EMAIL);
+/
 
---------------------------------------------------
 create or replace PACKAGE      "CONSULTA_USUARIOS" 
 AS
 
@@ -34,16 +36,20 @@ AS
     PROCEDURE obtener_usuarios(lista_registros OUT cursor_dinamico);
 
 END;
-----------------------------------------------------
+
+/
+
 create or replace PACKAGE BODY CONSULTA_USUARIOS
 IS
    PROCEDURE obtener_usuarios(lista_registros OUT cursor_dinamico) IS 
     BEGIN      
         OPEN lista_registros FOR 
-        SELECT ID,DNI,NOMBRE,APELLIDO,U.DIRECCION.CALLE,U.DIRECCION.CIUDAD,U.DIRECCION.CODPOST,TLF(1),EMAIL FROM USUARIOS U;
+        SELECT ID,DNI,NOMBRE,APELLIDO,U.DIRECCION.CALLE,U.DIRECCION.CIUDAD,U.DIRECCION.CODPOST,EMAIL,PENALIZADO FROM USUARIOS U ORDER BY ID;
   END;
   END;
-......................................................
+
+/
+
 create or replace PROCEDURE      "INSERTAR_USUARIO" (
       dni  IN USUARIOS.dni%TYPE,
       nombre IN USUARIOS.nombre%TYPE,
@@ -54,9 +60,11 @@ create or replace PROCEDURE      "INSERTAR_USUARIO" (
       email IN USUARIOS.email%TYPE
 ) IS
 BEGIN
-    INSERT INTO USUARIOS VALUES(seq_usuario.NEXTVAL,dni,nombre,apellido,DIRECCION(calle,ciudad,zip),email);
+    INSERT INTO USUARIOS VALUES(seq_usuario.NEXTVAL,dni,nombre,apellido,DIRECCION(calle,ciudad,zip),email,0);
 END;
-............................................................
+
+/
+
 create or replace PROCEDURE      "MODIFICAR_USUARIO" (
       ndni  IN USUARIOS.dni%TYPE,
       nnombre IN USUARIOS.nombre%TYPE,
@@ -70,21 +78,27 @@ create or replace PROCEDURE      "MODIFICAR_USUARIO" (
 BEGIN
     UPDATE USUARIOS U SET U.dni=ndni,U.nombre=nnombre,U.apellido=napellido,U.DIRECCION.calle=ncalle,U.DIRECCION.ciudad=nciudad,U.DIRECCION.codpost=nzip,U.email=nemail WHERE U.id=identificador;
 END;
-----------------------------------------------------------------
+
+/
+
 create or replace PROCEDURE      "BORRAR_USUARIO" (
       identificador  IN USUARIOS.id%TYPE
 ) IS
 BEGIN
     DELETE FROM USUARIOS U WHERE U.id=identificador;
 END;
-...................................................................
+
+/
+
 create or replace PROCEDURE      "PERDONAR_USUARIO" (
       identificador  IN USUARIOS.id%TYPE
 ) IS
 BEGIN
     UPDATE USUARIOS U SET U.PENALIZADO=0 WHERE U.id=identificador;
 END;
----------------------------------------------------------------------
+
+/
+
 create or replace PROCEDURE      "CASTIGAR_USUARIO" (
       identificador  IN USUARIOS.id%TYPE
 ) IS
@@ -92,10 +106,7 @@ BEGIN
     UPDATE USUARIOS U SET U.PENALIZADO=1 WHERE U.id=identificador;
 END;
 
-
-
-///////////////////////////////////////////////////////
-
+/
 
 CREATE TABLE CLASE_LIBRO(
 id NUMBER,
@@ -103,12 +114,16 @@ categoria VARCHAR2(255),
 plazo NUMBER,
 PRIMARY KEY(id)
 );
-----------------------------------------
+
+/
+
 CREATE OR REPLACE TYPE AUTOR AS OBJECT(
 nombre VARCHAR2(255),
 apellido VARCHAR2(255)
 );
------------------------------------------
+
+/
+
 CREATE OR REPLACE TYPE LIBRO AS OBJECT(
 id NUMBER(255),
 titulo VARCHAR2(255),
@@ -117,17 +132,23 @@ editor VARCHAR2(255),
 clase NUMBER,
 disponible NUMBER
 );
-------------------------------------------
+
+/
+
 CREATE SEQUENCE seq_libro
    MINVALUE 1
    START WITH 1
    INCREMENT BY 1;
-------------------------------------------
+
+/
+
 CREATE TABLE LIBROS OF LIBRO(
 id PRIMARY KEY,
 FOREIGN KEY (clase) REFERENCES CLASE_LIBRO(id)
 );
--------------------------------------------
+
+/
+
 create or replace PACKAGE      "CONSULTA_LIBROS" 
 AS
 
@@ -135,7 +156,20 @@ AS
     PROCEDURE obtener_libros(lista_registros OUT cursor_dinamico);
 
 END;
------------------------------------------------
+
+/
+
+create or replace PACKAGE BODY CONSULTA_LIBROS
+IS
+   PROCEDURE obtener_libros(lista_registros OUT cursor_dinamico) IS 
+    BEGIN      
+        OPEN lista_registros FOR 
+        SELECT ID,TITULO,L.AUTOR.NOMBRE,L.AUTOR.APELLIDO,EDITOR,CLASE,DISPONIBLE FROM LIBROS L ORDER BY ID;
+  END;
+  END;
+
+/
+
 create or replace PROCEDURE      "INSERTAR_LIBRO" (
       titulo  IN LIBROS.titulo%TYPE,
       nombre IN LIBROS.AUTOR.nombre%TYPE,
@@ -146,7 +180,9 @@ create or replace PROCEDURE      "INSERTAR_LIBRO" (
 BEGIN
     INSERT INTO LIBROS VALUES(seq_libro.NEXTVAL,titulo,AUTOR(nombre,apellido),editor,clase,1);
 END;
-----------------------------------------------------
+
+/
+
 create or replace PROCEDURE      "MODIFICAR_LIBRO" (
       ntitulo  IN LIBROS.titulo%TYPE,
       nnombre IN LIBROS.AUTOR.nombre%TYPE,
@@ -159,21 +195,27 @@ create or replace PROCEDURE      "MODIFICAR_LIBRO" (
 BEGIN
     UPDATE LIBROS L SET L.titulo=ntitulo, L.AUTOR.nombre=nnombre, L.AUTOR.apellido=napellido, L.editor=neditor, L.clase=nclase WHERE L.id=identificador;
 END;
------------------------------------------------------
+
+/
+
 create or replace PROCEDURE      "BORRAR_LIBRO" (
       identificador  IN LIBROS.id%TYPE
 ) IS
 BEGIN
     DELETE FROM LIBROS L WHERE L.id=identificador;
 END;
-...................................................................
+
+/
+
 create or replace PROCEDURE      "PRESTAR_LIBRO" (
       identificador  IN LIBROS.id%TYPE
 ) IS
 BEGIN
     UPDATE LIBROS L SET L.DISPONIBLE=0 WHERE L.id=identificador;
 END;
----------------------------------------------------------------------
+
+/
+
 create or replace PROCEDURE      "DEVOLVER_LIBRO" (
       identificador  IN LIBROS.id%TYPE
 ) IS
@@ -181,15 +223,14 @@ BEGIN
     UPDATE LIBROS L SET L.DISPONIBLE=1 WHERE L.id=identificador;
 END;
 
-
-///////////////////////////////////////////////////////
+/
 
 CREATE SEQUENCE seq_prestamos
    MINVALUE 1
    START WITH 1
    INCREMENT BY 1;
 
--------------------------------
+/
 
 CREATE TABLE PRESTAMOS(
 id NUMBER, 
@@ -201,11 +242,8 @@ fplazo DATE,
 PRIMARY KEY(id)
 )
 
---------------------------------------
-INSERT INTO PRESTAMOS(ID,USUARIO,LIBRO,FINICIO,FFIN,FPLAZO) SELECT seq_libro.NEXTVAL, REF(U),REF(L),'13/10/19',NULL,'20/10/19' FROM USUARIOS U, LIBROS L WHERE L.ID=1 AND U.ID=26;
----------------------------------------
-SELECT ID,P.USUARIO.NOMBRE,P.USUARIO.APELLIDO,P.LIBRO.TITULO,P.FINICIO,P.FFIN,P.FPLAZO FROM PRESTAMOS P;
----------------------------------------
+/
+
 create or replace PACKAGE      "CONSULTA_PRESTAMOS" 
 AS
 
@@ -213,32 +251,42 @@ AS
     PROCEDURE obtener_prestamos(lista_registros OUT cursor_dinamico);
 
 END;
------------------------------------------------
+
+/
+
 create or replace PACKAGE BODY CONSULTA_PRESTAMOS
 IS
    PROCEDURE obtener_prestamos(lista_registros OUT cursor_dinamico) IS 
     BEGIN      
         OPEN lista_registros FOR 
-        SELECT ID,P.USUARIO.ID,P.LIBRO.TITULO,P.FINICIO,P.FFIN,P.FPLAZO FROM PRESTAMOS P ORDER BY P.ID;
+        SELECT ID,P.USUARIO.ID,P.LIBRO.TITULO,P.FINICIO,P.FFIN,P.FPLAZO FROM PRESTAMOS P;
   END;
   END;
----------------------------------------------------
+
+/
+
 create or replace PROCEDURE      "INSERTAR_PRESTAMO" (
       nusuario IN USUARIOS.id%TYPE,
 	nlibro IN LIBROS.id%TYPE,
-	nfinicio IN DATE
+	nfinicio IN DATE,
+  posibilidad OUT NUMBER
 ) IS
 disponibilidad NUMBER;
+penalizacion NUMBER;
 BEGIN
 SELECT L.DISPONIBLE into disponibilidad FROM LIBROS L WHERE ID=nlibro;
-IF disponibilidad=1 THEN
+SELECT U.PENALIZADO into penalizacion FROM USUARIOS U WHERE ID=nusuario;
+IF disponibilidad=1 AND penalizacion=0 THEN
+    posibilidad:=1;
     UPDATE LIBROS SET DISPONIBLE=0 WHERE ID=nlibro;
     INSERT INTO PRESTAMOS(ID,USUARIO,LIBRO,FINICIO,FFIN,FPLAZO) SELECT seq_libro.NEXTVAL, REF(U),REF(L),nfinicio,NULL,nfinicio+(SELECT C.plazo FROM CLASE_LIBRO C JOIN LIBROS L ON L.clase=C.id WHERE L.id=nlibro) FROM USUARIOS U, LIBROS L WHERE L.ID=nlibro AND U.ID=nusuario;
 ELSE
-  DBMS_OUTPUT.PUT_LINE('Ya esta prestado');
+  posibilidad:=0;
   END IF;
 END;
------------------------------------------------------
+
+/
+
 create or replace PROCEDURE      "DEVOLVER_PRESTAMO" (
 	nprestamo IN NUMBER,
 	nffin IN DATE
@@ -253,7 +301,7 @@ UPDATE USUARIOS SET PENALIZADO=1 WHERE ID=(SELECT DEREF(USUARIO).ID FROM PRESTAM
 END IF;
 END;
 
-/////////////////////////////////////////////////////////
+/
 
 CREATE TABLE HISTORICOS(
 id NUMBER,
@@ -264,17 +312,23 @@ ffin DATE,
 fplazo DATE,
 PRIMARY KEY(id)
 )
-----------------------------------------------------------
+
+/
+
 CREATE SEQUENCE seq_historicos
    MINVALUE 1
    START WITH 1
    INCREMENT BY 1;
-----------------------------------------------------------
-CREATE TRIGGER INSERTAR_HISTORICOS BEFORE DELETE ON PRESTAMOS FOR EACH ROW
+
+/
+
+create or replace TRIGGER INSERTAR_HISTORICOS BEFORE DELETE ON PRESTAMOS FOR EACH ROW
 BEGIN
 INSERT INTO HISTORICOS VALUES(seq_historicos.NEXTVAL,DEREF(:old.USUARIO),DEREF(:old.LIBRO),:old.finicio,:old.ffin,:old.fplazo);
 END;
-------------------------------------------------------------
+
+/
+
 create or replace PACKAGE      "CONSULTA_HISTORICOS" 
 AS
 
@@ -282,7 +336,9 @@ AS
     PROCEDURE obtener_historicos(lista_registros OUT cursor_dinamico);
 
 END;
------------------------------------------------
+
+/
+
 create or replace PACKAGE BODY CONSULTA_HISTORICOS
 IS
    PROCEDURE obtener_historicos(lista_registros OUT cursor_dinamico) IS 
@@ -291,3 +347,7 @@ IS
         SELECT ID,H.USUARIO.DNI, H.USUARIO.NOMBRE, H.USUARIO.APELLIDO,H.LIBRO.TITULO, H.LIBRO.AUTOR.NOMBRE, H.LIBRO.AUTOR.APELLIDO, H.FINICIO,H.FFIN,H.FPLAZO FROM HISTORICOS H ORDER BY ID;
   END;
   END;
+
+--INSERT INTO PRESTAMOS(ID,USUARIO,LIBRO,FINICIO,FFIN,FPLAZO) SELECT seq_libro.NEXTVAL, REF(U),REF(L),'13/10/19',NULL,'20/10/19' FROM USUARIOS U, LIBROS L WHERE L.ID=1 AND U.ID=26;
+
+--SELECT ID,P.USUARIO.NOMBRE,P.USUARIO.APELLIDO,P.LIBRO.TITULO,P.FINICIO,P.FFIN,P.FPLAZO FROM PRESTAMOS P;

@@ -18,7 +18,7 @@ public class Prestamo {
 	int tamanho, id;
 	
 	
-	public void insertarPrestamo(int idUsuario, int idLibro, String fechInicio) throws SQLException {
+	public int insertarPrestamo(int idUsuario, int idLibro, String fechInicio) throws SQLException {
 		//EJEMPLO PROCEDIMIENTO
 		int control=0;
 		con=Conexion.getConnection();
@@ -35,6 +35,7 @@ public class Prestamo {
         	 System.out.println("Prestamo no posible");
          cstmt.close();
 		con.close();
+		return control;
 	}
 	
 	public void devolverPrestamo(int idPrestamo, String fechFin) throws SQLException {

@@ -261,13 +261,6 @@ CREATE SEQUENCE seq_cds
 
 /
 
-CREATE SEQUENCE seq_prestamos
-   MINVALUE 1
-   START WITH 1
-   INCREMENT BY 1;
-
-/
-
 CREATE TABLE AUDIOLIBROS OF AUDIOLIBRO(
 id PRIMARY KEY
 )
@@ -313,6 +306,24 @@ END;
 
 /
 
+create or replace PROCEDURE      "PRESTAR_AUDIOLIBRO" (
+      identificador  IN AUDIOLIBROS.id%TYPE
+) IS
+BEGIN
+    UPDATE AUDIOLIBROS L SET L.DISPONIBLE=0 WHERE L.id=identificador;
+END;
+
+/
+
+create or replace PROCEDURE      "DEVOLVER_AUDIOLIBRO" (
+      identificador  IN AUDIOLIBROS.id%TYPE
+) IS
+BEGIN
+    UPDATE AUDIOLIBROS L SET L.DISPONIBLE=1 WHERE L.id=identificador;
+END;
+
+/
+
 create or replace PACKAGE      "CONSULTA_AUDIOLIBROS" 
 AS
 
@@ -343,6 +354,13 @@ ffin DATE,
 fplazo DATE,
 PRIMARY KEY(id)
 )
+
+/
+
+CREATE SEQUENCE seq_prestamos
+   MINVALUE 1
+   START WITH 1
+   INCREMENT BY 1;
 
 /
 
@@ -385,6 +403,15 @@ IF disponibilidad=1 AND penalizacion=0 THEN
 ELSE
   posibilidad:=0;
   END IF;
+END;
+
+/
+
+create or replace PROCEDURE      "BORRAR_PRESTAMO" (
+      identificador  IN PRESTAMOS.id%TYPE
+) IS
+BEGIN
+    DELETE FROM PRESTAMOS P WHERE P.id=identificador;
 END;
 
 /
@@ -447,6 +474,140 @@ IS
     BEGIN      
         OPEN lista_registros FOR 
         SELECT ID,H.USUARIO.DNI, H.USUARIO.NOMBRE, H.USUARIO.APELLIDO,H.LIBRO.TITULO, H.LIBRO.AUTOR.NOMBRE, H.LIBRO.AUTOR.APELLIDO, H.FINICIO,H.FFIN,H.FPLAZO FROM HISTORICOS H ORDER BY ID;
+  END;
+  END;
+
+/
+
+CREATE TABLE PRESTAMOS_AUDIOLIBROS(
+id NUMBER, 
+usuario REF USUARIO SCOPE IS USUARIOS,
+audiolibro REF AUDIOLIBRO SCOPE IS AUDIOLIBROS,
+finicio DATE,
+ffin DATE,
+fplazo DATE,
+PRIMARY KEY(id)
+)
+
+/
+
+CREATE SEQUENCE seq_prestamos_audiolibros
+   MINVALUE 1
+   START WITH 1
+   INCREMENT BY 1;
+
+/
+
+create or replace PACKAGE      "CONSULTA_PRESTAMOS_AUDIOLIBROS" 
+AS
+
+    TYPE cursor_dinamico IS REF CURSOR;
+    PROCEDURE obtener_prestamos_audiolibros(lista_registros OUT cursor_dinamico);
+
+END;
+
+/
+
+create or replace PACKAGE BODY CONSULTA_PRESTAMOS_AUDIOLIBROS
+IS
+   PROCEDURE obtener_prestamos_audiolibros(lista_registros OUT cursor_dinamico) IS 
+    BEGIN      
+        OPEN lista_registros FOR 
+        SELECT ID,P.USUARIO.ID,P.AUDIOLIBRO.TITULO,P.FINICIO,P.FFIN,P.FPLAZO FROM PRESTAMOS_AUDIOLIBROS P;
+  END;
+  END;
+
+/
+
+create or replace PROCEDURE      "INSERTAR_PRESTAMO_AUDIOLIBRO" (
+      nusuario IN USUARIOS.id%TYPE,
+	naudiolibro IN AUDIOLIBROS.id%TYPE,
+	nfinicio IN DATE,
+  posibilidad OUT NUMBER
+) IS
+disponibilidad NUMBER;
+penalizacion NUMBER;
+BEGIN
+SELECT L.DISPONIBLE into disponibilidad FROM AUDIOLIBROS L WHERE ID=naudiolibro;
+SELECT U.PENALIZADO into penalizacion FROM USUARIOS U WHERE ID=nusuario;
+IF disponibilidad=1 AND penalizacion=0 THEN
+    posibilidad:=1;
+    UPDATE AUDIOLIBROS SET DISPONIBLE=0 WHERE ID=naudiolibro;
+    INSERT INTO PRESTAMOS_AUDIOLIBROS(ID,USUARIO,AUDIOLIBRO,FINICIO,FFIN,FPLAZO) SELECT seq_prestamos_audiolibros.NEXTVAL, REF(U),REF(L),nfinicio,NULL,nfinicio+7 FROM USUARIOS U, AUDIOLIBROS L WHERE L.ID=naudiolibro AND U.ID=nusuario;
+ELSE
+  posibilidad:=0;
+  END IF;
+END;
+
+/
+
+create or replace PROCEDURE      "BORRAR_PRESTAMO_AUDIOLIBRO" (
+      identificador  IN PRESTAMOS_AUDIOLIBROS.id%TYPE
+) IS
+BEGIN
+    DELETE FROM PRESTAMOS_AUDIOLIBROS P WHERE P.id=identificador;
+END;
+
+/
+
+create or replace PROCEDURE      "DEVOLVER_PRESTAMO_AUDIOLIBRO" (
+	nprestamo IN NUMBER,
+	nffin IN DATE
+) IS
+finalizacion DATE;
+BEGIN
+SELECT FPLAZO INTO finalizacion FROM PRESTAMOS_AUDIOLIBROS WHERE PRESTAMOS_AUDIOLIBROS.ID=nprestamo;
+UPDATE PRESTAMOS_AUDIOLIBROS SET FFIN=nffin WHERE ID=nprestamo;
+UPDATE AUDIOLIBROS SET DISPONIBLE=1 WHERE ID=(SELECT DEREF(AUDIOLIBRO).ID FROM PRESTAMOS_AUDIOLIBROS WHERE ID=nprestamo);
+IF nffin>finalizacion THEN
+UPDATE USUARIOS SET PENALIZADO=1 WHERE ID=(SELECT DEREF(USUARIO).ID FROM PRESTAMOS_AUDIOLIBROS WHERE ID=nprestamo);
+END IF;
+END;
+
+/
+
+CREATE TABLE HISTORICOS_AUDIOLIBROS(
+id NUMBER,
+usuario HR.USUARIO,
+audiolibro HR.AUDIOLIBRO,
+finicio DATE,
+ffin DATE,
+fplazo DATE,
+PRIMARY KEY(id)
+)
+
+/
+
+CREATE SEQUENCE seq_historicosa
+   MINVALUE 1
+   START WITH 1
+   INCREMENT BY 1;
+
+/
+
+create or replace TRIGGER INSERTAR_HISTORICOS_AUDIOLIBRO BEFORE DELETE ON PRESTAMOS_AUDIOLIBROS FOR EACH ROW
+BEGIN
+INSERT INTO HISTORICOS_AUDIOLIBROS VALUES(seq_historicosa.NEXTVAL,DEREF(:old.USUARIO),DEREF(:old.AUDIOLIBRO),:old.finicio,:old.ffin,:old.fplazo);
+END;
+
+/
+
+create or replace PACKAGE      "CONSULTA_HISTORICOS_A" 
+AS
+
+    TYPE cursor_dinamico IS REF CURSOR;
+    PROCEDURE obtener_historicos(lista_registros OUT cursor_dinamico);
+
+END;
+
+/
+
+create or replace PACKAGE BODY CONSULTA_HISTORICOS_A
+IS
+   PROCEDURE obtener_historicos(lista_registros OUT cursor_dinamico) IS 
+    BEGIN      
+        OPEN lista_registros FOR 
+        SELECT ID,H.USUARIO.DNI, H.USUARIO.NOMBRE, H.USUARIO.APELLIDO,H.AUDIOLIBRO.TITULO, H.AUDIOLIBRO.AUTOR.NOMBRE, H.AUDIOLIBRO.AUTOR.APELLIDO, H.FINICIO,H.FFIN,H.FPLAZO FROM HISTORICOS_AUDIOLIBROS H ORDER BY ID;
   END;
   END;
 

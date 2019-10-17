@@ -33,6 +33,9 @@ public class Vista extends javax.swing.JFrame {
         bLibrosPI = new javax.swing.JButton();
         bPrestamosPI = new javax.swing.JButton();
         bHistoricosPI = new javax.swing.JButton();
+        bAudiolibrosPI = new javax.swing.JButton();
+        bPrestamosAudiolibrosPI = new javax.swing.JButton();
+        bHistoricosAudiolibrosPI = new javax.swing.JButton();
         pUsuarios = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
@@ -127,6 +130,35 @@ public class Vista extends javax.swing.JFrame {
         bLibrosPI1 = new javax.swing.JButton();
         bPrestamosPI2 = new javax.swing.JButton();
         bPrestamosPI3 = new javax.swing.JButton();
+        pAudiolibros = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tablaAudiolibros = new javax.swing.JTable();
+        bVolverPIPAud = new javax.swing.JButton();
+        jLabel25 = new javax.swing.JLabel();
+        cTituloAudiolibro = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        cNombreAudiolibro = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
+        cApellidoAudiolibro = new javax.swing.JTextField();
+        jLabel30 = new javax.swing.JLabel();
+        cSelloAudiolibro = new javax.swing.JTextField();
+        jLabel34 = new javax.swing.JLabel();
+        cNLectorAudiolibro = new javax.swing.JTextField();
+        btnCrearAudiolibro = new javax.swing.JButton();
+        btnModificarAudiolibro = new javax.swing.JButton();
+        btnEliminarAudiolibro = new javax.swing.JButton();
+        cIDEliminarAudiolibro = new javax.swing.JTextField();
+        cIDModificarAudiolibro = new javax.swing.JTextField();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        btnDisponibleLibro1 = new javax.swing.JButton();
+        cIDDisponibleAudiolibro = new javax.swing.JTextField();
+        jLabel38 = new javax.swing.JLabel();
+        btnCambiarAPrestar1 = new javax.swing.JButton();
+        cIDPrestarAudiolibro = new javax.swing.JTextField();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        cALectorAudiolibro = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -146,17 +178,38 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
-        bPrestamosPI.setText("Prestamos");
+        bPrestamosPI.setText("Prestamos Libros");
         bPrestamosPI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bPrestamosPIActionPerformed(evt);
             }
         });
 
-        bHistoricosPI.setText("Historicos");
+        bHistoricosPI.setText("Historicos P Libros");
         bHistoricosPI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bHistoricosPIActionPerformed(evt);
+            }
+        });
+
+        bAudiolibrosPI.setText("Audiolibros");
+        bAudiolibrosPI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAudiolibrosPIActionPerformed(evt);
+            }
+        });
+
+        bPrestamosAudiolibrosPI.setText("Prestamos Audiolibros");
+        bPrestamosAudiolibrosPI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPrestamosAudiolibrosPIActionPerformed(evt);
+            }
+        });
+
+        bHistoricosAudiolibrosPI.setText("Historicos P Audiolibros");
+        bHistoricosAudiolibrosPI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bHistoricosAudiolibrosPIActionPerformed(evt);
             }
         });
 
@@ -165,26 +218,35 @@ public class Vista extends javax.swing.JFrame {
         pInicioLayout.setHorizontalGroup(
             pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pInicioLayout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(69, 69, 69)
                 .addGroup(pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bUsuariosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bLibrosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bPrestamosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bHistoricosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(100, 100, 100))
+                    .addComponent(bHistoricosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bAudiolibrosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bPrestamosAudiolibrosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bHistoricosAudiolibrosPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(76, 76, 76))
         );
         pInicioLayout.setVerticalGroup(
             pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pInicioLayout.createSequentialGroup()
-                .addGap(126, 126, 126)
+                .addGap(51, 51, 51)
                 .addComponent(bUsuariosPI)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bLibrosPI)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bAudiolibrosPI)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bPrestamosPI)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bPrestamosAudiolibrosPI)
+                .addGap(10, 10, 10)
                 .addComponent(bHistoricosPI)
-                .addGap(113, 113, 113))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bHistoricosAudiolibrosPI)
+                .addGap(44, 44, 44))
         );
 
         pContainer.add(pInicio, "card2");
@@ -850,6 +912,191 @@ public class Vista extends javax.swing.JFrame {
 
         pContainer.add(pRelleno, "card2");
 
+        tablaAudiolibros.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane7.setViewportView(tablaAudiolibros);
+
+        bVolverPIPAud.setText("Volver");
+
+        jLabel25.setText("Titulo");
+
+        cTituloAudiolibro.setText(" ");
+
+        jLabel26.setText("Nombre Autor");
+
+        cNombreAudiolibro.setText(" ");
+
+        jLabel29.setText("Apellido Autor");
+
+        cApellidoAudiolibro.setText(" ");
+
+        jLabel30.setText("Sello");
+
+        cSelloAudiolibro.setText(" ");
+
+        jLabel34.setText("Nombre Lector");
+
+        cNLectorAudiolibro.setText(" ");
+
+        btnCrearAudiolibro.setText("Crear Audiolibro");
+
+        btnModificarAudiolibro.setText("Modificar Audiolibro");
+
+        btnEliminarAudiolibro.setText("Eliminar Audiolibro");
+        btnEliminarAudiolibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarAudiolibroActionPerformed(evt);
+            }
+        });
+
+        cIDEliminarAudiolibro.setText(" ");
+
+        cIDModificarAudiolibro.setText(" ");
+
+        jLabel36.setText("ID");
+
+        jLabel37.setText("ID");
+
+        btnDisponibleLibro1.setText("Hacer disponible");
+
+        cIDDisponibleAudiolibro.setText(" ");
+
+        jLabel38.setText("ID");
+
+        btnCambiarAPrestar1.setText("Prestar");
+
+        cIDPrestarAudiolibro.setText(" ");
+
+        jLabel39.setText("ID");
+
+        jLabel40.setText("Apellido Lector");
+
+        cALectorAudiolibro.setText(" ");
+
+        javax.swing.GroupLayout pAudiolibrosLayout = new javax.swing.GroupLayout(pAudiolibros);
+        pAudiolibros.setLayout(pAudiolibrosLayout);
+        pAudiolibrosLayout.setHorizontalGroup(
+            pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pAudiolibrosLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(pAudiolibrosLayout.createSequentialGroup()
+                        .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnModificarAudiolibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCrearAudiolibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminarAudiolibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(22, 22, 22)
+                        .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cIDEliminarAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cIDModificarAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel36)
+                            .addComponent(jLabel37))
+                        .addGap(72, 72, 72)
+                        .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDisponibleLibro1)
+                            .addComponent(btnCambiarAPrestar1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cIDDisponibleAudiolibro, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                            .addComponent(cIDPrestarAudiolibro))
+                        .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pAudiolibrosLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel39)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bVolverPIPAud))
+                            .addGroup(pAudiolibrosLayout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel38)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(pAudiolibrosLayout.createSequentialGroup()
+                        .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel25)
+                            .addComponent(cTituloAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel26)
+                            .addComponent(cNombreAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel29)
+                            .addComponent(cApellidoAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel30)
+                            .addComponent(cSelloAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel34)
+                            .addComponent(cNLectorAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel40)
+                            .addComponent(cALectorAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 734, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(51, 51, 51))
+        );
+        pAudiolibrosLayout.setVerticalGroup(
+            pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pAudiolibrosLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pAudiolibrosLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel25)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cTituloAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cNombreAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel29)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cApellidoAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel30)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cSelloAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel34)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cNLectorAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel40)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cALectorAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnCrearAudiolibro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnDisponibleLibro1)
+                                .addComponent(cIDDisponibleAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel38))
+                            .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnModificarAudiolibro)
+                                .addComponent(cIDModificarAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel36)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCambiarAPrestar1)
+                        .addComponent(cIDPrestarAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel39))
+                    .addGroup(pAudiolibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEliminarAudiolibro)
+                        .addComponent(cIDEliminarAudiolibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel37)
+                        .addComponent(bVolverPIPAud)))
+                .addContainerGap())
+        );
+
+        pContainer.add(pAudiolibros, "card3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -906,6 +1153,22 @@ public class Vista extends javax.swing.JFrame {
         // TODO add your handling code here:
     }                                             
 
+    private void bAudiolibrosPIActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        // TODO add your handling code here:
+    }                                              
+
+    private void bPrestamosAudiolibrosPIActionPerformed(java.awt.event.ActionEvent evt) {                                                        
+        // TODO add your handling code here:
+    }                                                       
+
+    private void bHistoricosAudiolibrosPIActionPerformed(java.awt.event.ActionEvent evt) {                                                         
+        // TODO add your handling code here:
+    }                                                        
+
+    private void btnEliminarAudiolibroActionPerformed(java.awt.event.ActionEvent evt) {                                                      
+        // TODO add your handling code here:
+    }                                                     
+
     /**
      * @param args the command line arguments
      */
@@ -942,31 +1205,42 @@ public class Vista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify                     
+    public javax.swing.JButton bAudiolibrosPI;
+    public javax.swing.JButton bHistoricosAudiolibrosPI;
     public javax.swing.JButton bHistoricosPI;
     public javax.swing.JButton bLibrosPI;
     public javax.swing.JButton bLibrosPI1;
+    public javax.swing.JButton bPrestamosAudiolibrosPI;
     public javax.swing.JButton bPrestamosPI;
     public javax.swing.JButton bPrestamosPI2;
     public javax.swing.JButton bPrestamosPI3;
     public javax.swing.JButton bUsuariosPI;
     public javax.swing.JButton bUsuariosPI1;
+    public javax.swing.JButton bVolverPIPAud;
     public javax.swing.JButton bVolverPIPLib;
     public javax.swing.JButton bVolverPIPPrest;
     public javax.swing.JButton bVolverPIPPrestHist;
     public javax.swing.JButton bVolverPIPUs;
     public javax.swing.JButton btnCambiarAPrestar;
+    public javax.swing.JButton btnCambiarAPrestar1;
     public javax.swing.JButton btnCastigarUsuario;
+    public javax.swing.JButton btnCrearAudiolibro;
     public javax.swing.JButton btnCrearLibro;
     public javax.swing.JButton btnCrearPrestamo;
     public javax.swing.JButton btnCrearUsuario;
     public javax.swing.JButton btnDevolverLibroPrestamo;
     public javax.swing.JButton btnDisponibleLibro;
+    public javax.swing.JButton btnDisponibleLibro1;
+    public javax.swing.JButton btnEliminarAudiolibro;
     public javax.swing.JButton btnEliminarLibro;
     public javax.swing.JButton btnEliminarPrestamo;
     public javax.swing.JButton btnEliminarUsuario;
+    public javax.swing.JButton btnModificarAudiolibro;
     public javax.swing.JButton btnModificarLibro;
     public javax.swing.JButton btnModificarUsuario;
     public javax.swing.JButton btnPerdonarUsuario;
+    public javax.swing.JTextField cALectorAudiolibro;
+    public javax.swing.JTextField cApellidoAudiolibro;
     public javax.swing.JTextField cApellidoLibro;
     public javax.swing.JTextField cApellidoUsuario;
     public javax.swing.JTextField cCalleUsuario;
@@ -977,19 +1251,27 @@ public class Vista extends javax.swing.JFrame {
     public javax.swing.JTextField cFechaDevolucionPrestamo;
     public javax.swing.JTextField cFechaInicioPrestamo;
     public javax.swing.JTextField cIDDevolverLibroPrestamo;
+    public javax.swing.JTextField cIDDisponibleAudiolibro;
     public javax.swing.JTextField cIDDisponibleLibro;
+    public javax.swing.JTextField cIDEliminarAudiolibro;
     public javax.swing.JTextField cIDEliminarLibro;
     public javax.swing.JTextField cIDEliminarPrestamo;
     public javax.swing.JTextField cIDEliminarUsuario;
+    public javax.swing.JTextField cIDModificarAudiolibro;
     public javax.swing.JTextField cIDModificarLibro;
     public javax.swing.JTextField cIDModificarUsuario;
     public javax.swing.JTextField cIDPenalizarUsuario;
     public javax.swing.JTextField cIDPerdonarUsuario;
+    public javax.swing.JTextField cIDPrestarAudiolibro;
     public javax.swing.JTextField cIDPrestarLibro;
     public javax.swing.JTextField cLibroPrestamo;
+    public javax.swing.JTextField cNLectorAudiolibro;
+    public javax.swing.JTextField cNombreAudiolibro;
     public javax.swing.JTextField cNombreLibro;
     public javax.swing.JTextField cNombreUsuario;
+    public javax.swing.JTextField cSelloAudiolibro;
     public javax.swing.JTextField cTipoLibro;
+    public javax.swing.JTextField cTituloAudiolibro;
     public javax.swing.JTextField cTituloLibro;
     public javax.swing.JTextField cUsuarioPrestamo;
     public javax.swing.JTextField cZipUsuario;
@@ -1010,14 +1292,24 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1029,6 +1321,8 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    public javax.swing.JPanel pAudiolibros;
     public javax.swing.JPanel pContainer;
     public javax.swing.JPanel pHistoricos;
     public javax.swing.JPanel pInicio;
@@ -1036,6 +1330,7 @@ public class Vista extends javax.swing.JFrame {
     public javax.swing.JPanel pPrestamos;
     public javax.swing.JPanel pRelleno;
     public javax.swing.JPanel pUsuarios;
+    public javax.swing.JTable tablaAudiolibros;
     public javax.swing.JTable tablaLibros;
     public javax.swing.JTable tablaLibrosPrestamos;
     public javax.swing.JTable tablaPrestamos;

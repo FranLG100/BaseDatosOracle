@@ -15,8 +15,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import modelo.Audiolibro;
 import modelo.GestorInterfaz;
 import modelo.Historicos;
+import modelo.HistoricosAudiolibros;
 import modelo.Libro;
 import modelo.Prestamo;
+import modelo.PrestamoAudiolibros;
 import modelo.Usuario;
 import utilesFran.Amadeus;
 import vista.Vista;
@@ -30,7 +32,9 @@ public class Controlador implements ActionListener, MouseListener {
 	private Libro libro= new Libro();
 	private Audiolibro audiolibro= new Audiolibro();
 	private Prestamo prestamo=new Prestamo();
+	private PrestamoAudiolibros prestamo_a=new PrestamoAudiolibros();
 	private Historicos historicos=new Historicos();
+	private HistoricosAudiolibros historicos_a=new HistoricosAudiolibros();
 	private String dni,nombre,apellido,calle,ciudad,email,zip;
 	private String titulo,editorial,sello,nlector,alector;
 	private int id;
@@ -38,18 +42,25 @@ public class Controlador implements ActionListener, MouseListener {
 	private int idUsuario, idLibro,idPrestamo;
 	private String finicio,ffin;
 	private boolean validez;
-	
-	boolean idValido=false,dniValido = false,nombreValido = false,apellidoValido = false,calleValido = false,ciudadValido = false,emailValido = false,zipValido = false;
-	boolean tituloValido=false,nombreAutorValido = false,apellidoAutorValido = false,codigoValido = false,editorialValido = false, selloValido=false, nlectorValido=false,alectorValido=false;
-	
+	private int control = 0;
+	private boolean idUsuarioValido = false, idLibroValido = false, finicioValido = false;
+	private boolean idPrestamoValido=false,ffinValido=false;
+	private boolean idValido=false,dniValido = false,nombreValido = false,apellidoValido = false,calleValido = false,ciudadValido = false,emailValido = false,zipValido = false;
+	private boolean tituloValido=false,nombreAutorValido = false,apellidoAutorValido = false,codigoValido = false,editorialValido = false, selloValido=false, nlectorValido=false,alectorValido=false;
+	private boolean idPrestamoEliminarValido = false;
+	private String[] datosLibro=new String[5];
+	private String[] datosAudiolibro=new String[6];
+	private String[] datosUsuario=new String[7];
 	
 	public enum AccionMVC {
-		__GOTO_USUARIOS, __GOTO_INICIO, __CREAR_USUARIO, __MODIFICAR_USUARIO, __ELIMINAR_USUARIO,
+		__GOTO_USUARIOS, __GOTO_INICIO, __CREAR_USUARIO, __MODIFICAR_USUARIO, __ELIMINAR_USUARIO,  __CONSULTAR_USUARIO,
 		__CASTIGAR_USUARIO,__PERDONAR_USUARIO,
-		__GOTO_LIBROS, __CREAR_LIBRO, __MODIFICAR_LIBRO, __ELIMINAR_LIBRO, __DEVOLVER_LIBRO,__PRESTAR_LIBRO,
+		__GOTO_LIBROS, __CREAR_LIBRO, __MODIFICAR_LIBRO, __ELIMINAR_LIBRO, __DEVOLVER_LIBRO,__PRESTAR_LIBRO, __CONSULTAR_LIBRO,
 		__GOTO_PRESTAMOS, __CREAR_PRESTAMO, __DEVOLVER_PRESTAMO, __ELIMINAR_PRESTAMO,
 		__GOTO_HISTORICOS,
-		__GOTO_AUDIOLIBRO, __CREAR_AUDIOLIBRO, __MODIFICAR_AUDIOLIBRO, __ELIMINAR_AUDIOLIBRO, __DEVOLVER_AUDIOLIBRO,__PRESTAR_AUDIOLIBRO,
+		__GOTO_AUDIOLIBRO, __CREAR_AUDIOLIBRO, __MODIFICAR_AUDIOLIBRO, __ELIMINAR_AUDIOLIBRO, __DEVOLVER_AUDIOLIBRO,__PRESTAR_AUDIOLIBRO, __CONSULTAR_AUDIOLIBRO,
+		__GOTO_PRESTAMOS_AUDIOLIBROS, __CREAR_PRESTAMO_AUDIOLIBRO, __DEVOLVER_PRESTAMO_AUDIOLIBRO, __ELIMINAR_PRESTAMO_AUDIOLIBRO,
+		__GOTO_HISTORICOS_AUDIOLIBROS,
 	}
 	
 	public Controlador(Vista vista) {
@@ -88,6 +99,12 @@ public class Controlador implements ActionListener, MouseListener {
 		this.vista.bVolverPIPAud.setActionCommand("__GOTO_INICIO");
 		this.vista.bVolverPIPAud.addActionListener(this);
 		
+		this.vista.bVolverPIPPrestHistAudiolibro.setActionCommand("__GOTO_INICIO");
+		this.vista.bVolverPIPPrestHistAudiolibro.addActionListener(this);
+		
+		this.vista.bVolverPIPPrestAudiolibro.setActionCommand("__GOTO_INICIO");
+		this.vista.bVolverPIPPrestAudiolibro.addActionListener(this);
+		
 		this.vista.bLibrosPI.setActionCommand("__GOTO_LIBROS");
 		this.vista.bLibrosPI.addActionListener(this);
 		
@@ -100,11 +117,17 @@ public class Controlador implements ActionListener, MouseListener {
 		this.vista.bHistoricosPI.setActionCommand("__GOTO_HISTORICOS");
 		this.vista.bHistoricosPI.addActionListener(this);
 		
+		this.vista.bHistoricosAudiolibrosPI.setActionCommand("__GOTO_HISTORICOS_AUDIOLIBROS");
+		this.vista.bHistoricosAudiolibrosPI.addActionListener(this);
+		
 		this.vista.btnCrearUsuario.setActionCommand("__CREAR_USUARIO");
 		this.vista.btnCrearUsuario.addActionListener(this);
 		
 		this.vista.btnModificarUsuario.setActionCommand("__MODIFICAR_USUARIO");
 		this.vista.btnModificarUsuario.addActionListener(this);
+		
+		this.vista.btnModificarUsuarioBuscar.setActionCommand("__CONSULTAR_USUARIO");
+		this.vista.btnModificarUsuarioBuscar.addActionListener(this);
 		
 		this.vista.btnEliminarUsuario.setActionCommand("__ELIMINAR_USUARIO");
 		this.vista.btnEliminarUsuario.addActionListener(this);
@@ -123,6 +146,9 @@ public class Controlador implements ActionListener, MouseListener {
 		
 		this.vista.btnEliminarLibro.setActionCommand("__ELIMINAR_LIBRO");
 		this.vista.btnEliminarLibro.addActionListener(this);
+		
+		this.vista.btnModificarLibroBuscar.setActionCommand("__CONSULTAR_LIBRO");
+		this.vista.btnModificarLibroBuscar.addActionListener(this);
 		
 		this.vista.btnDisponibleLibro.setActionCommand("__DEVOLVER_LIBRO");
 		this.vista.btnDisponibleLibro.addActionListener(this);
@@ -148,6 +174,9 @@ public class Controlador implements ActionListener, MouseListener {
 		this.vista.btnCambiarAPrestar1.setActionCommand("__PRESTAR_AUDIOLIBRO");
 		this.vista.btnCambiarAPrestar1.addActionListener(this);
 		
+		this.vista.btnModificarAudiolibroBuscar.setActionCommand("__CONSULTAR_AUDIOLIBRO");
+		this.vista.btnModificarAudiolibroBuscar.addActionListener(this);
+		
 		
 		
 		this.vista.bPrestamosPI.setActionCommand("__GOTO_PRESTAMOS");
@@ -161,6 +190,21 @@ public class Controlador implements ActionListener, MouseListener {
 		
 		this.vista.btnEliminarPrestamo.setActionCommand("__ELIMINAR_PRESTAMO");
 		this.vista.btnEliminarPrestamo.addActionListener(this);
+		
+		
+		
+		
+		this.vista.bPrestamosAudiolibrosPI.setActionCommand("__GOTO_PRESTAMOS_AUDIOLIBROS");
+		this.vista.bPrestamosAudiolibrosPI.addActionListener(this);
+		
+		this.vista.btnCrearPrestamoAudiolibro.setActionCommand("__CREAR_PRESTAMO_AUDIOLIBRO");
+		this.vista.btnCrearPrestamoAudiolibro.addActionListener(this);
+		
+		this.vista.btnDevolverLibroPrestamoAudiolibro.setActionCommand("__DEVOLVER_PRESTAMO_AUDIOLIBRO");
+		this.vista.btnDevolverLibroPrestamoAudiolibro.addActionListener(this);
+		
+		this.vista.btnEliminarPrestamoAudiolibro.setActionCommand("__ELIMINAR_PRESTAMO_AUDIOLIBRO");
+		this.vista.btnEliminarPrestamoAudiolibro.addActionListener(this);
 		
 
 
@@ -360,6 +404,31 @@ public class Controlador implements ActionListener, MouseListener {
 			}
 			this.vista.tablaUsuarios.setModel(usuario.listarUsuarios());
 			break;
+		case __CONSULTAR_USUARIO:
+			validez=true;
+			try {
+				idValido=amadeus.controlaIntPositivoValido(Integer.parseInt(this.vista.cIDModificarUsuario.getText().toString().trim()));
+			} catch (NumberFormatException | IOException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Caracteres Invalidos en ID");
+				validez=false;
+			}
+			if(!idValido ) {
+				JOptionPane.showMessageDialog(null, "Introduzca un valor positivo de ID");
+				validez=false;
+			}
+			if(validez) {
+				id=Integer.parseInt(vista.cIDModificarUsuario.getText().toString().trim());
+				datosUsuario=usuario.listarUsuario(id);
+				this.vista.cDNIUsuario.setText(datosUsuario[0]);
+				this.vista.cNombreUsuario.setText(datosUsuario[1]);
+				this.vista.cApellidoUsuario.setText(datosUsuario[2]);
+				this.vista.cCalleUsuario.setText(datosUsuario[3]);
+				this.vista.cCiudadUsuario.setText(datosUsuario[4]);
+				this.vista.cZipUsuario.setText(datosUsuario[5]);
+				this.vista.cEmailUsuario.setText(datosUsuario[6]);
+			}
+			break;
 ///////////////////////////////////////////////////////////////////////////////////////////			
 ////////   *** LIBROS ***   ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////	
@@ -473,6 +542,29 @@ public class Controlador implements ActionListener, MouseListener {
 					e1.printStackTrace();
 				}
 				this.vista.tablaLibros.setModel(libro.listarLibros());
+			}
+			break;
+		case __CONSULTAR_LIBRO:
+			validez=true;
+			try {
+				idValido=amadeus.controlaIntPositivoValido(Integer.parseInt(this.vista.cIDModificarLibro.getText().toString().trim()));
+			} catch (NumberFormatException | IOException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Caracteres Invalidos en ID");
+				validez=false;
+			}
+			if(!idValido ) {
+				JOptionPane.showMessageDialog(null, "Introduzca un valor positivo de ID");
+				validez=false;
+			}
+			if(validez) {
+				id=Integer.parseInt(vista.cIDModificarLibro.getText().toString().trim());
+				datosLibro=libro.listarLibro(id);
+				this.vista.cTituloLibro.setText(datosLibro[0]);
+				this.vista.cNombreLibro.setText(datosLibro[1]);
+				this.vista.cApellidoLibro.setText(datosLibro[2]);
+				this.vista.cEditorialLibro.setText(datosLibro[3]);
+				this.vista.cTipoLibro.setText(datosLibro[4]);
 			}
 			break;
 		case __DEVOLVER_LIBRO:
@@ -607,6 +699,30 @@ public class Controlador implements ActionListener, MouseListener {
 				this.vista.tablaAudiolibros.setModel(audiolibro.listarAudiolibros());
 			}
 			break;
+		case __CONSULTAR_AUDIOLIBRO:
+			validez=true;
+			try {
+				idValido=amadeus.controlaIntPositivoValido(Integer.parseInt(this.vista.cIDModificarAudiolibro.getText().toString().trim()));
+			} catch (NumberFormatException | IOException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Caracteres Invalidos en ID");
+				validez=false;
+			}
+			if(!idValido ) {
+				JOptionPane.showMessageDialog(null, "Introduzca un valor positivo de ID");
+				validez=false;
+			}
+			if(validez) {
+				id=Integer.parseInt(vista.cIDModificarAudiolibro.getText().toString().trim());
+				datosAudiolibro=audiolibro.listarAudiolibro(id);
+				this.vista.cTituloAudiolibro.setText(datosAudiolibro[0]);
+				this.vista.cNombreAudiolibro.setText(datosAudiolibro[1]);
+				this.vista.cApellidoAudiolibro.setText(datosAudiolibro[2]);
+				this.vista.cSelloAudiolibro.setText(datosAudiolibro[3]);
+				this.vista.cNLectorAudiolibro.setText(datosAudiolibro[4]);
+				this.vista.cALectorAudiolibro.setText(datosAudiolibro[5]);
+			}
+			break;
 		case __DEVOLVER_AUDIOLIBRO:
 			id = Integer.parseInt(vista.cIDDisponibleAudiolibro.getText().toString().trim());
 			try {
@@ -639,8 +755,6 @@ public class Controlador implements ActionListener, MouseListener {
 			break;
 		case __CREAR_PRESTAMO:
 			validez=true;
-			int control=0;
-			boolean idUsuarioValido=false,idLibroValido=false,finicioValido=false;
 			try {
 				idUsuarioValido=amadeus.compruebaTextoVacio(vista.cUsuarioPrestamo.getText().toString().trim());
 				idLibroValido=amadeus.compruebaTextoVacio(vista.cLibroPrestamo.getText().toString().trim());
@@ -696,7 +810,6 @@ public class Controlador implements ActionListener, MouseListener {
 			break;
 		case __DEVOLVER_PRESTAMO:
 			validez=true;
-			boolean idPrestamoValido=false,ffinValido=false;
 			try {
 				idPrestamoValido=amadeus.compruebaTextoVacio(vista.cIDDevolverLibroPrestamo.getText().toString().trim());
 				ffinValido=amadeus.compruebaTextoVacio(vista.cFechaDevolucionPrestamo.getText().toString().trim());
@@ -738,7 +851,7 @@ public class Controlador implements ActionListener, MouseListener {
 			break;
 		case __ELIMINAR_PRESTAMO:
 			validez=true;
-			boolean idPrestamoEliminarValido=false;
+			
 			try {
 				idPrestamoEliminarValido=amadeus.compruebaTextoVacio(vista.cIDEliminarPrestamo.getText().toString().trim());
 				} catch (IOException e2) {
@@ -775,9 +888,165 @@ public class Controlador implements ActionListener, MouseListener {
 				this.vista.tablaLibrosPrestamos.setModel(libro.listarLibrosPrestamo());
 			}
 				break;
+///////////////////////////////////////////////////////////////////////////////////////////			
+////////*** PRESTAMOS AUDIOLIBROS***   ////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////		
+		case __GOTO_PRESTAMOS_AUDIOLIBROS:
+			gui.cambiarPanel(vista.pPrestamosAudiolibros);
+			this.vista.tablaPrestamosAudiolibro.setModel(prestamo_a.listarPrestamo());
+			this.vista.tablaUsuariosPrestamosAudiolibro.setModel(usuario.listarUsuariosPrestamo());
+			this.vista.tablaLibrosPrestamosAudiolibro.setModel(audiolibro.listarAudiolibrosPrestamo());
+			break;
+		case __CREAR_PRESTAMO_AUDIOLIBRO:
+			validez = true;
+			
+			try {
+				idUsuarioValido = amadeus.compruebaTextoVacio(vista.cUsuarioPrestamoAudiolibro.getText().toString().trim());
+				idLibroValido = amadeus.compruebaTextoVacio(vista.cLibroPrestamoAudiolibro.getText().toString().trim());
+				finicioValido = amadeus.compruebaTextoVacio(vista.cFechaInicioPrestamoAudiolibro.getText().toString().trim());
+			} catch (IOException e2) {
+// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			try {
+				idUsuarioValido = amadeus.controlaIntPositivoValido(
+						Integer.parseInt(this.vista.cUsuarioPrestamoAudiolibro.getText().toString().trim()));
+			} catch (NumberFormatException | IOException e1) {
+// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Caracteres Invalidos en ID Usuario");
+				validez = false;
+			}
+			if (!idUsuarioValido) {
+				JOptionPane.showMessageDialog(null, "Introduzca un valor positivo de ID");
+				validez = false;
+			}
+			try {
+				idLibroValido = amadeus.controlaIntPositivoValido(
+						Integer.parseInt(this.vista.cLibroPrestamoAudiolibro.getText().toString().trim()));
+			} catch (NumberFormatException | IOException e1) {
+// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Caracteres Invalidos en ID Libro");
+				validez = false;
+			}
+			if (!idLibroValido) {
+				JOptionPane.showMessageDialog(null, "Introduzca un valor positivo de ID");
+				validez = false;
+			}
+			if (!idUsuarioValido || !idLibroValido || !finicioValido) {
+				validez = false;
+				JOptionPane.showMessageDialog(null, "Hay campos en blanco");
+			}
+			if (validez) {
+				idUsuario = Integer.parseInt(vista.cUsuarioPrestamoAudiolibro.getText().toString().trim());
+				idLibro = Integer.parseInt(vista.cLibroPrestamoAudiolibro.getText().toString().trim());
+				finicio = vista.cFechaInicioPrestamoAudiolibro.getText().toString().trim();
+				try {
+					control = prestamo_a.insertarPrestamo(idUsuario, idLibro, finicio);
+				} catch (SQLException e1) {
+// TODO Auto-generated catch block
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Fecha o id inexistente");
+					validez = false;
+				}
+				this.vista.tablaPrestamosAudiolibro.setModel(prestamo_a.listarPrestamo());
+				this.vista.tablaUsuariosPrestamosAudiolibro.setModel(usuario.listarUsuariosPrestamo());
+				this.vista.tablaLibrosPrestamosAudiolibro.setModel(audiolibro.listarAudiolibrosPrestamo());
+				if (control != 1)
+					JOptionPane.showMessageDialog(null, "Prestamo no posible");
+			}
+			break;
+		case __DEVOLVER_PRESTAMO_AUDIOLIBRO:
+			validez = true;
+			try {
+				idPrestamoValido = amadeus
+						.compruebaTextoVacio(vista.cIDDevolverLibroPrestamoAudiolibro.getText().toString().trim());
+				ffinValido = amadeus.compruebaTextoVacio(vista.cFechaDevolucionPrestamoAudiolibro.getText().toString().trim());
+			} catch (IOException e2) {
+// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			try {
+				idPrestamoValido = amadeus.controlaIntPositivoValido(
+						Integer.parseInt(this.vista.cIDDevolverLibroPrestamoAudiolibro.getText().toString().trim()));
+			} catch (NumberFormatException | IOException e1) {
+// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Caracteres Invalidos en ID Prestamo");
+				validez = false;
+			}
+			if (!idPrestamoValido) {
+				JOptionPane.showMessageDialog(null, "Introduzca un valor positivo de ID");
+				validez = false;
+			}
+
+			if (!idPrestamoValido || !ffinValido) {
+				validez = false;
+				JOptionPane.showMessageDialog(null, "Hay campos en blanco");
+			}
+			if (validez) {
+				idPrestamo = Integer.parseInt(vista.cIDDevolverLibroPrestamoAudiolibro.getText().toString().trim());
+				ffin = vista.cFechaDevolucionPrestamoAudiolibro.getText().toString().trim();
+				try {
+					prestamo_a.devolverPrestamo(idPrestamo, ffin);
+				} catch (SQLException e1) {
+// TODO Auto-generated catch block
+					e1.printStackTrace();
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Fecha o id inexistente");
+				}
+				this.vista.tablaPrestamosAudiolibro.setModel(prestamo_a.listarPrestamo());
+				this.vista.tablaUsuariosPrestamosAudiolibro.setModel(usuario.listarUsuariosPrestamo());
+				this.vista.tablaLibrosPrestamosAudiolibro.setModel(libro.listarLibrosPrestamo());
+			}
+			break;
+		case __ELIMINAR_PRESTAMO_AUDIOLIBRO:
+			validez = true;
+			
+			try {
+				idPrestamoEliminarValido = amadeus
+						.compruebaTextoVacio(vista.cIDEliminarPrestamoAudiolibro.getText().toString().trim());
+			} catch (IOException e2) {
+// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			try {
+				idPrestamoEliminarValido = amadeus.controlaIntPositivoValido(
+						Integer.parseInt(this.vista.cIDDevolverLibroPrestamoAudiolibro.getText().toString().trim()));
+			} catch (NumberFormatException | IOException e1) {
+// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Caracteres Invalidos en ID Eliminar Prestamo");
+				validez = false;
+			}
+			if (!idPrestamoEliminarValido) {
+				JOptionPane.showMessageDialog(null, "Introduzca un valor positivo de ID");
+				validez = false;
+			}
+
+			if (!idPrestamoEliminarValido) {
+				validez = false;
+				JOptionPane.showMessageDialog(null, "Hay campos en blanco");
+			}
+			if (validez) {
+				id = Integer.parseInt(vista.cIDEliminarPrestamoAudiolibro.getText().toString().trim());
+				try {
+					prestamo_a.borrarPrestamo(id);
+					;
+				} catch (SQLException e1) {
+// TODO Auto-generated catch block
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Id inexistente");
+				}
+				this.vista.tablaPrestamosAudiolibro.setModel(prestamo_a.listarPrestamo());
+				this.vista.tablaUsuariosPrestamosAudiolibro.setModel(usuario.listarUsuariosPrestamo());
+				this.vista.tablaLibrosPrestamosAudiolibro.setModel(audiolibro.listarAudiolibrosPrestamo());
+			}
+			break;
 			case __GOTO_HISTORICOS:
 				gui.cambiarPanel(vista.pHistoricos);
 				this.vista.tablaPrestamosHistoricos.setModel(historicos.listarHistoricos());
+				break;
+			case __GOTO_HISTORICOS_AUDIOLIBROS:
+				gui.cambiarPanel(vista.pHistoricosAudiolibro);
+				this.vista.tablaPrestamosHistoricosAudiolibro.setModel(historicos_a.listarHistoricos());
 				break;
 		}
 		}

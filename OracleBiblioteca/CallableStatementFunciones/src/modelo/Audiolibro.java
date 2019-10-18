@@ -142,6 +142,38 @@ public class Audiolibro {
 		return plantilla;
 	}
 	
+	public String[] listarAudiolibro(int n) {
+		String titulo,nombre,apellido,sello, lnombre,lapellido;
+		String[] datos=new String[6];
+		try {
+			con=Conexion.getConnection();
+			cstmt=con.prepareCall("{call CONSULTA_AUDIOLIBRO.obtener_audiolibro(?,?)}");
+		    cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+		    cstmt.setInt(2, n);
+		    cstmt.executeQuery();
+		    ResultSet cursor = (ResultSet)cstmt.getObject(1);
+
+			while (cursor.next()) {
+				titulo=cursor.getString(1);
+				nombre=cursor.getString(2);
+				apellido=cursor.getString(3);
+				sello=cursor.getString(4);
+				lnombre=cursor.getString(5);
+				lapellido=cursor.getString(6);
+				datos[0] = titulo;
+				datos[1] = nombre;
+				datos[2] = apellido;
+				datos[3] = sello;
+				datos[4] = lnombre;
+				datos[5] = lapellido;
+			}
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return datos;
+	}
+	
 	
 	public DefaultTableModel listarAudiolibrosPrestamo() {
 

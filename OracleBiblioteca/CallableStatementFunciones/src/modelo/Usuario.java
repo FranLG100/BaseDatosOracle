@@ -256,4 +256,39 @@ public class Usuario {
 	}
 	
 	
+	public String[] listarUsuario(int n) {
+		String dni,nombre,apellido,calle,ciudad,zip,email;
+		String[] datos=new String[7];
+		try {
+			con=Conexion.getConnection();
+			cstmt=con.prepareCall("{call CONSULTA_USUARIO.obtener_usuario(?,?)}");
+		    cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+		    cstmt.setInt(2, n);
+		    cstmt.executeQuery();
+		    ResultSet cursor = (ResultSet)cstmt.getObject(1);
+
+			while (cursor.next()) {
+				dni=cursor.getString(1);
+				nombre=cursor.getString(2);
+				apellido=cursor.getString(3);
+				calle=cursor.getString(4);
+				ciudad=cursor.getString(5);
+				zip=cursor.getString(6);
+				email=cursor.getString(7);
+				datos[0] = dni;
+				datos[1] = nombre;
+				datos[2] = apellido;
+				datos[3] = calle;
+				datos[4] = ciudad;
+				datos[5] = zip;
+				datos[6] = email;
+			}
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return datos;
+	}
+	
+	
 }

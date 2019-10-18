@@ -50,6 +50,27 @@ IS
 
 /
 
+create or replace PACKAGE      "CONSULTA_USUARIO" 
+AS
+
+    TYPE cursor_dinamico IS REF CURSOR;
+    PROCEDURE obtener_usuario(lista_registros OUT cursor_dinamico, identificador IN NUMBER);
+
+END;
+
+/
+
+create or replace PACKAGE BODY CONSULTA_USUARIO
+IS
+   PROCEDURE obtener_usuario(lista_registros OUT cursor_dinamico, identificador IN NUMBER) IS 
+    BEGIN      
+        OPEN lista_registros FOR 
+        SELECT DNI,NOMBRE,APELLIDO,U.DIRECCION.CALLE,U.DIRECCION.CIUDAD,U.DIRECCION.CODPOST,EMAIL FROM USUARIOS U WHERE ID=identificador;
+  END;
+  END;
+
+/
+
 create or replace PROCEDURE      "INSERTAR_USUARIO" (
       dni  IN USUARIOS.dni%TYPE,
       nombre IN USUARIOS.nombre%TYPE,
@@ -187,6 +208,27 @@ IS
     BEGIN      
         OPEN lista_registros FOR 
         SELECT ID,TITULO,L.AUTOR.NOMBRE,L.AUTOR.APELLIDO,EDITOR,CLASE,DISPONIBLE FROM LIBROS L ORDER BY ID;
+  END;
+  END;
+
+/
+
+create or replace PACKAGE      "CONSULTA_LIBRO" 
+AS
+
+    TYPE cursor_dinamico IS REF CURSOR;
+    PROCEDURE obtener_libro(lista_registros OUT cursor_dinamico, identificador IN NUMBER);
+
+END;
+
+/
+
+create or replace PACKAGE BODY CONSULTA_LIBRO
+IS
+   PROCEDURE obtener_libro(lista_registros OUT cursor_dinamico, identificador IN NUMBER) IS 
+    BEGIN      
+        OPEN lista_registros FOR 
+        SELECT ID,TITULO,L.AUTOR.NOMBRE,L.AUTOR.APELLIDO,EDITOR,CLASE,DISPONIBLE FROM LIBROS L WHERE ID=identificador;
   END;
   END;
 
@@ -340,6 +382,27 @@ IS
     BEGIN      
         OPEN lista_registros FOR 
         SELECT A.ID,A.TITULO, A.AUTOR.NOMBRE, A.AUTOR.APELLIDO, A.SELLO, A.LECTOR.GET_LECTOR(), A.DISPONIBLE  FROM AUDIOLIBROS A ORDER BY ID;
+  END;
+  END;
+
+/
+
+create or replace PACKAGE      "CONSULTA_AUDIOLIBRO" 
+AS
+
+    TYPE cursor_dinamico IS REF CURSOR;
+    PROCEDURE obtener_audiolibro(lista_registros OUT cursor_dinamico, identificador IN NUMBER);
+
+END;
+
+/
+
+create or replace PACKAGE BODY CONSULTA_AUDIOLIBRO
+IS
+   PROCEDURE obtener_audiolibro(lista_registros OUT cursor_dinamico, identificador IN NUMBER) IS 
+    BEGIN      
+        OPEN lista_registros FOR 
+        SELECT A.TITULO, A.AUTOR.NOMBRE, A.AUTOR.APELLIDO, A.SELLO, A.LECTOR.NOMBRE, A.LECTOR.APELLIDO FROM AUDIOLIBROS A WHERE ID=identificador;
   END;
   END;
 

@@ -140,6 +140,37 @@ public class Libro {
 		return plantilla;
 	}
 	
+	public String[] listarLibro(int n) {
+		int id,codigo,disponibilidad;
+		String titulo,nombre,apellido,editorial;
+		String[] datos=new String[5];
+		try {
+			con=Conexion.getConnection();
+			cstmt=con.prepareCall("{call CONSULTA_LIBRO.obtener_libro(?,?)}");
+		    cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+		    cstmt.setInt(2, n);
+		    cstmt.executeQuery();
+		    ResultSet cursor = (ResultSet)cstmt.getObject(1);
+
+			while (cursor.next()) {
+				titulo=cursor.getString(2);
+				nombre=cursor.getString(3);
+				apellido=cursor.getString(4);
+				editorial=cursor.getString(5);
+				codigo=cursor.getInt(6);
+				datos[0] = titulo;
+				datos[1] = nombre;
+				datos[2] = apellido;
+				datos[3] = editorial;
+				datos[4] = Integer.toString(codigo);
+			}
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return datos;
+	}
+	
 	
 	public DefaultTableModel listarLibrosPrestamo() {
 

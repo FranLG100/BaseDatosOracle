@@ -596,7 +596,7 @@ create or replace PACKAGE      "CONSULTA_HISTORICOS_A"
 AS
 
     TYPE cursor_dinamico IS REF CURSOR;
-    PROCEDURE obtener_historicos(lista_registros OUT cursor_dinamico);
+    PROCEDURE obtener_historicosa(lista_registros OUT cursor_dinamico);
 
 END;
 
@@ -604,7 +604,7 @@ END;
 
 create or replace PACKAGE BODY CONSULTA_HISTORICOS_A
 IS
-   PROCEDURE obtener_historicos(lista_registros OUT cursor_dinamico) IS 
+   PROCEDURE obtener_historicosa(lista_registros OUT cursor_dinamico) IS 
     BEGIN      
         OPEN lista_registros FOR 
         SELECT ID,H.USUARIO.DNI, H.USUARIO.NOMBRE, H.USUARIO.APELLIDO,H.AUDIOLIBRO.TITULO, H.AUDIOLIBRO.AUTOR.NOMBRE, H.AUDIOLIBRO.AUTOR.APELLIDO, H.FINICIO,H.FFIN,H.FPLAZO FROM HISTORICOS_AUDIOLIBROS H ORDER BY ID;

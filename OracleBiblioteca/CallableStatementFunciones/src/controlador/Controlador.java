@@ -54,7 +54,7 @@ public class Controlador implements ActionListener, MouseListener {
 	
 	public enum AccionMVC {
 		__GOTO_USUARIOS, __GOTO_INICIO, __CREAR_USUARIO, __MODIFICAR_USUARIO, __ELIMINAR_USUARIO,  __CONSULTAR_USUARIO,
-		__CASTIGAR_USUARIO,__PERDONAR_USUARIO,
+		__CASTIGAR_USUARIO,__PERDONAR_USUARIO, __REBAJAR_CASTIGO,
 		__GOTO_LIBROS, __CREAR_LIBRO, __MODIFICAR_LIBRO, __ELIMINAR_LIBRO, __DEVOLVER_LIBRO,__PRESTAR_LIBRO, __CONSULTAR_LIBRO,
 		__GOTO_PRESTAMOS, __CREAR_PRESTAMO, __DEVOLVER_PRESTAMO, __ELIMINAR_PRESTAMO,
 		__GOTO_HISTORICOS,
@@ -206,6 +206,9 @@ public class Controlador implements ActionListener, MouseListener {
 		this.vista.btnEliminarPrestamoAudiolibro.setActionCommand("__ELIMINAR_PRESTAMO_AUDIOLIBRO");
 		this.vista.btnEliminarPrestamoAudiolibro.addActionListener(this);
 		
+		
+		this.vista.btnRebajarCastigos.setActionCommand("__REBAJAR_CASTIGO");
+		this.vista.btnRebajarCastigos.addActionListener(this);
 
 
 	}
@@ -383,6 +386,15 @@ public class Controlador implements ActionListener, MouseListener {
 				}
 				this.vista.tablaUsuarios.setModel(usuario.listarUsuarios());
 				}
+			break;
+		case __REBAJAR_CASTIGO:
+			try {
+				usuario.rebajarCastigos();
+			} catch (SQLException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
+			this.vista.tablaUsuarios.setModel(usuario.listarUsuarios());
 			break;
 		case __CASTIGAR_USUARIO:
 			id=Integer.parseInt(vista.cIDPenalizarUsuario.getText().trim());
@@ -995,7 +1007,7 @@ public class Controlador implements ActionListener, MouseListener {
 				}
 				this.vista.tablaPrestamosAudiolibro.setModel(prestamo_a.listarPrestamo());
 				this.vista.tablaUsuariosPrestamosAudiolibro.setModel(usuario.listarUsuariosPrestamo());
-				this.vista.tablaLibrosPrestamosAudiolibro.setModel(libro.listarLibrosPrestamo());
+				this.vista.tablaLibrosPrestamosAudiolibro.setModel(audiolibro.listarAudiolibrosPrestamo());
 			}
 			break;
 		case __ELIMINAR_PRESTAMO_AUDIOLIBRO:

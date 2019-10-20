@@ -68,6 +68,7 @@ public class Vista extends javax.swing.JFrame {
         cIDPerdonarUsuario = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         btnModificarUsuarioBuscar = new javax.swing.JButton();
+        btnRebajarCastigos = new javax.swing.JButton();
         pLibros = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaLibros = new javax.swing.JTable();
@@ -356,6 +357,8 @@ public class Vista extends javax.swing.JFrame {
 
         btnModificarUsuarioBuscar.setText("Buscar");
 
+        btnRebajarCastigos.setText("Rebajar Castigos");
+
         javax.swing.GroupLayout pUsuariosLayout = new javax.swing.GroupLayout(pUsuarios);
         pUsuarios.setLayout(pUsuariosLayout);
         pUsuariosLayout.setHorizontalGroup(
@@ -393,6 +396,8 @@ public class Vista extends javax.swing.JFrame {
                                 .addComponent(cIDPerdonarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel11)
+                                .addGap(46, 46, 46)
+                                .addComponent(btnRebajarCastigos, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(bVolverPIPUs))))
                     .addGroup(pUsuariosLayout.createSequentialGroup()
@@ -462,12 +467,13 @@ public class Vista extends javax.swing.JFrame {
                                 .addComponent(btnModificarUsuario)
                                 .addComponent(cIDModificarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel8)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 21, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnPerdonarUsuario)
                         .addComponent(cIDPerdonarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel11))
+                        .addComponent(jLabel11)
+                        .addComponent(btnRebajarCastigos))
                     .addGroup(pUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnEliminarUsuario)
                         .addComponent(cIDEliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1547,6 +1553,7 @@ public class Vista extends javax.swing.JFrame {
     public javax.swing.JButton btnModificarUsuario;
     public javax.swing.JButton btnModificarUsuarioBuscar;
     public javax.swing.JButton btnPerdonarUsuario;
+    public javax.swing.JButton btnRebajarCastigos;
     public javax.swing.JTextField cALectorAudiolibro;
     public javax.swing.JTextField cApellidoAudiolibro;
     public javax.swing.JTextField cApellidoLibro;

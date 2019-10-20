@@ -255,6 +255,14 @@ public class Usuario {
 		return plantilla;
 	}
 	
+	public void rebajarCastigos() throws SQLException {
+			con=Conexion.getConnection();
+			cstmt = con.prepareCall("{call REBAJAR_CASTIGO()}");
+	         cstmt.execute();
+	         cstmt.close();
+			con.close();
+	}
+	
 	
 	public String[] listarUsuario(int n) {
 		String dni,nombre,apellido,calle,ciudad,zip,email;

@@ -2,7 +2,9 @@ package modelo;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import javax.swing.table.DefaultTableModel;
@@ -75,10 +77,11 @@ public class Libro {
 		con.close();
 	}
 	
-	public DefaultTableModel listarLibros() {
-
+	public DefaultTableModel listarLibros() throws SQLException {
+		ResultSetMetaData rsmetadatos;
+		int columnas=0;
 		tamanho=0;
-		String[] headers = { "ID","Titulo","Nombre Autor","Apellido","Editorial","Codigo","Disponible"};
+		String[] headers = null;// = { "ID","Titulo","Nombre Autor","Apellido","Editorial","Codigo","Disponible"};
 		DefaultTableModel plantilla = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -92,7 +95,12 @@ public class Libro {
 		    cstmt.registerOutParameter(1, OracleTypes.CURSOR);
 		    cstmt.executeQuery();
 		    ResultSet cursor = (ResultSet)cstmt.getObject(1);
-		    
+		    rsmetadatos=cursor.getMetaData();
+		    columnas=rsmetadatos.getColumnCount();
+		    headers=new String[columnas];
+		    for (int i = 0; i < headers.length; i++) {
+				headers[i]=rsmetadatos.getColumnName(i+1);
+			}
 		    while(cursor.next()) {
 		    	tamanho++;
 		    }
@@ -103,7 +111,7 @@ public class Libro {
 			e.printStackTrace();
 		}
 
-		String[][] filas = new String[tamanho][7];
+		String[][] filas = new String[tamanho][columnas];
 
 		try {
 			int id,codigo,disponibilidad;
@@ -175,7 +183,7 @@ public class Libro {
 	public DefaultTableModel listarLibrosPrestamo() {
 
 		tamanho=0;
-		String[] headers = { "ID","Titulo","Autor","Disponible"};
+		String[] headers = { "ID","TITULO","AUTOR","DISPONIBLE"};
 		DefaultTableModel plantilla = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {

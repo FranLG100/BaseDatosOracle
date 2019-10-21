@@ -3,6 +3,7 @@ package modelo;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import javax.swing.table.DefaultTableModel;
@@ -126,8 +127,11 @@ public class Usuario {
 	
 	public DefaultTableModel listarUsuarios() {
 
+		ResultSetMetaData rsmetadatos;
+		int columnas=0;
 		tamanho=0;
-		String[] headers = { "ID","DNI","Nombre","Apellido","Calle","Ciudad","ZIP","Email","Penalizado" };
+		String[] headers = null;
+		
 		DefaultTableModel plantilla = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -141,7 +145,12 @@ public class Usuario {
 		    cstmt.registerOutParameter(1, OracleTypes.CURSOR);
 		    cstmt.executeQuery();
 		    ResultSet cursor = (ResultSet)cstmt.getObject(1);
-		    
+		    rsmetadatos=cursor.getMetaData();
+		    columnas=rsmetadatos.getColumnCount();
+		    headers=new String[columnas];
+		    for (int i = 0; i < headers.length; i++) {
+				headers[i]=rsmetadatos.getColumnName(i+1);
+			}
 		    while(cursor.next()) {
 		    	tamanho++;
 		        System.out.println("ID = " + cursor.getInt(1)+" DNI:"+cursor.getString(2)+" Nombre:"+cursor.getString(3)+" Apellido:"+cursor.getString(4)+" Calle:"+cursor.getString(5)+" Ciudad:"+cursor.getString(6)+" Zip:"+cursor.getInt(7)+"  Email:"+cursor.getString(8));
@@ -198,7 +207,7 @@ public class Usuario {
 	public DefaultTableModel listarUsuariosPrestamo() {
 
 		tamanho=0;
-		String[] headers = { "ID","DNI","Nombre","Penalizado" };
+		String[] headers = { "ID","DNI","NOMBRE","PENALIZADO" };
 		DefaultTableModel plantilla = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {

@@ -3,6 +3,7 @@ package modelo;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import javax.swing.table.DefaultTableModel;
@@ -61,8 +62,10 @@ public class PrestamoAudiolibros {
 	
 	public DefaultTableModel listarPrestamo() {
 
+		ResultSetMetaData rsmetadatos;
+		int columnas=0;
 		tamanho=0;
-		String[] headers = { "ID","Usuario","Titulo","F.Inicio","F.Fin","Fin Plazo"};
+		String[] headers = null;
 		DefaultTableModel plantilla = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -76,7 +79,12 @@ public class PrestamoAudiolibros {
 		    cstmt.registerOutParameter(1, OracleTypes.CURSOR);
 		    cstmt.executeQuery();
 		    ResultSet cursor = (ResultSet)cstmt.getObject(1);
-		    
+		    rsmetadatos=cursor.getMetaData();
+		    columnas=rsmetadatos.getColumnCount();
+		    headers=new String[columnas];
+		    for (int i = 0; i < headers.length; i++) {
+				headers[i]=rsmetadatos.getColumnName(i+1);
+			}
 		    while(cursor.next()) {
 		    	tamanho++;
 		    }
@@ -87,7 +95,7 @@ public class PrestamoAudiolibros {
 			e.printStackTrace();
 		}
 
-		String[][] filas = new String[tamanho][6];
+		String[][] filas = new String[tamanho][columnas];
 
 		try {
 			con=Conexion.getConnection();

@@ -3,6 +3,7 @@ package modelo;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -13,14 +14,16 @@ public class Historicos {
 	
 	Connection con;
 	CallableStatement cstmt = null;
-	String nombre,dni,apellido,titulo,autor,finicio,ffin,finplazo;
+	String nombre,dni,apellido,titulo,autor,aautor,finicio,ffin,finplazo;
 	int tamanho, id;
 	
 	
 	public DefaultTableModel listarHistoricos() {
 
+		ResultSetMetaData rsmetadatos;
+		int columnas=0;
 		tamanho=0;
-		String[] headers = { "ID","DNI","Usuario","Titulo","Autor","F.Inicio","F.Fin","Fin Plazo"};
+		String[] headers = null;
 		DefaultTableModel plantilla = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -34,7 +37,12 @@ public class Historicos {
 		    cstmt.registerOutParameter(1, OracleTypes.CURSOR);
 		    cstmt.executeQuery();
 		    ResultSet cursor = (ResultSet)cstmt.getObject(1);
-		    
+		    rsmetadatos=cursor.getMetaData();
+		    columnas=rsmetadatos.getColumnCount();
+		    headers=new String[columnas];
+		    for (int i = 0; i < headers.length; i++) {
+				headers[i]=rsmetadatos.getColumnName(i+1);
+			}
 		    while(cursor.next()) {
 		    	tamanho++;
 		    }
@@ -45,7 +53,7 @@ public class Historicos {
 			e.printStackTrace();
 		}
 
-		String[][] filas = new String[tamanho][8];
+		String[][] filas = new String[tamanho][columnas];
 
 		try {
 			con=Conexion.getConnection();
@@ -57,9 +65,11 @@ public class Historicos {
 			while (cursor.next()) {
 				id = cursor.getInt(1);
 				dni=cursor.getString(2);
-				nombre=cursor.getString(3)+" "+cursor.getString(4);
+				nombre=cursor.getString(3);
+				apellido=cursor.getString(4);
 				titulo=cursor.getString(5);
-				autor=cursor.getString(6)+" "+cursor.getString(7);
+				autor=cursor.getString(6);
+				aautor=cursor.getString(7);
 				finicio=cursor.getString(8).substring(0,10);
 				if(cursor.getString(9) != null)
 					ffin=cursor.getString(9).substring(0,10);
@@ -70,11 +80,13 @@ public class Historicos {
 				filas[i][0] = Integer.toString(id);
 				filas[i][1] = dni;
 				filas[i][2] = nombre;
-				filas[i][3] = titulo;
-				filas[i][4] = autor;
-				filas[i][5] = finicio;
-				filas[i][6] = ffin;
-				filas[i][7] = finplazo;
+				filas[i][3] = apellido;
+				filas[i][4] = titulo;
+				filas[i][5] = autor;
+				filas[i][6] = aautor;
+				filas[i][7] = finicio;
+				filas[i][8] = ffin;
+				filas[i][9] = finplazo;
 				i++;
 				System.out.println(filas.toString());
 			}

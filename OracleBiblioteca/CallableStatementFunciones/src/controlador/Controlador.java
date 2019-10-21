@@ -446,7 +446,12 @@ public class Controlador implements ActionListener, MouseListener {
 ///////////////////////////////////////////////////////////////////////////////////////////	
 		case __GOTO_LIBROS:
 			gui.cambiarPanel(vista.pLibros);
-			this.vista.tablaLibros.setModel(libro.listarLibros());
+			try {
+				this.vista.tablaLibros.setModel(libro.listarLibros());
+			} catch (SQLException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
 			break;
 		case __CREAR_LIBRO:
 			validez=true;
@@ -481,7 +486,12 @@ public class Controlador implements ActionListener, MouseListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				this.vista.tablaLibros.setModel(libro.listarLibros());
+				try {
+					this.vista.tablaLibros.setModel(libro.listarLibros());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				}
 			break;
 		case __MODIFICAR_LIBRO:
@@ -529,7 +539,12 @@ public class Controlador implements ActionListener, MouseListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				this.vista.tablaLibros.setModel(libro.listarLibros());
+				try {
+					this.vista.tablaLibros.setModel(libro.listarLibros());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			break;
 		case __ELIMINAR_LIBRO:
@@ -553,7 +568,12 @@ public class Controlador implements ActionListener, MouseListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				this.vista.tablaLibros.setModel(libro.listarLibros());
+				try {
+					this.vista.tablaLibros.setModel(libro.listarLibros());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			break;
 		case __CONSULTAR_LIBRO:
@@ -587,7 +607,12 @@ public class Controlador implements ActionListener, MouseListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			this.vista.tablaLibros.setModel(libro.listarLibros());
+			try {
+				this.vista.tablaLibros.setModel(libro.listarLibros());
+			} catch (SQLException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
 			break;
 		case __PRESTAR_LIBRO:
 			id=Integer.parseInt(vista.cIDPrestarLibro.getText().toString().trim());
@@ -597,7 +622,12 @@ public class Controlador implements ActionListener, MouseListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			this.vista.tablaLibros.setModel(libro.listarLibros());
+			try {
+				this.vista.tablaLibros.setModel(libro.listarLibros());
+			} catch (SQLException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
 			break;
 ///////////////////////////////////////////////////////////////////////////////////////////			
 ////////*** AUDIOLIBROS ***   ///////////////////////////////////////////////////////////////
